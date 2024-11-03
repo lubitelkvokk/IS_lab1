@@ -1,4 +1,4 @@
-package itmo.is.lab1.model;
+package itmo.is.lab1.model.data;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
@@ -39,5 +39,7 @@ public class Person {
     @NotNull(message = "Nationality cannot be null")
     @Column(name = "nationality", nullable = false)
     private Country nationality; // Поле не может быть null
+
+
 
 }

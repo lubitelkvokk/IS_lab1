@@ -1,4 +1,4 @@
-package itmo.is.lab1.DTO.model;
+package itmo.is.lab1.DTO.model.data;
 
 import lombok.Data;
 

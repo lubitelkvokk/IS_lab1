@@ -1,6 +1,6 @@
 package itmo.is.lab1.dao;
 
-import itmo.is.lab1.model.Address;
+import itmo.is.lab1.model.data.Address;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
 import jakarta.transaction.Transactional;

@@ -1,4 +1,4 @@
-package itmo.is.lab1.model;
+package itmo.is.lab1.model.data;
 
 public enum Color {
     RED,

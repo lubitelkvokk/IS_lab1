@@ -1,6 +1,6 @@
 package itmo.is.lab1.controller;
 
-import itmo.is.lab1.DTO.model.CoordinatesDTO;
+import itmo.is.lab1.DTO.model.data.CoordinatesDTO;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -16,7 +16,7 @@ public class CoordinatesController {
         return ResponseEntity.status(HttpStatus.CREATED).body(stub);
     }
     @GetMapping
-    public ResponseEntity<CoordinatesDTO> getCoordinates(int id){
+    public ResponseEntity<CoordinatesDTO> getCoordinates(Integer id){
         CoordinatesDTO stub = new CoordinatesDTO(123d,123);
         return ResponseEntity.status(HttpStatus.CREATED).body(stub);
     }

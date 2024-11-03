@@ -1,6 +1,6 @@
 package itmo.is.lab1.controller;
 
-import itmo.is.lab1.DTO.model.LocationDTO;
+import itmo.is.lab1.DTO.model.data.LocationDTO;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -17,7 +17,7 @@ public class LocationController {
     }
 
     @GetMapping
-    public ResponseEntity<LocationDTO> getLocation(@RequestParam int id) {
+    public ResponseEntity<LocationDTO> getLocation(@RequestParam Integer id) {
         // Stub for demonstration purposes
         LocationDTO stub = new LocationDTO(123.45f, 200, "Sample Location");
         return ResponseEntity.status(HttpStatus.OK).body(stub);
