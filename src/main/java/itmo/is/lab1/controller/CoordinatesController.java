@@ -1,24 +1,32 @@
 package itmo.is.lab1.controller;
 
+import io.swagger.v3.oas.annotations.Operation;
 import itmo.is.lab1.DTO.model.data.CoordinatesDTO;
+import itmo.is.lab1.service.CoordinatesService;
+import jakarta.validation.Valid;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController("api/coordinates")
 public class CoordinatesController {
+
+    @Autowired
+    private CoordinatesService coordinatesService;
+
     @PostMapping
-    public ResponseEntity<CoordinatesDTO> addCoordinates(@RequestBody CoordinatesDTO coordinatesDTO){
-        CoordinatesDTO stub = new CoordinatesDTO(123d,123);
-        return ResponseEntity.status(HttpStatus.CREATED).body(stub);
+    @Operation(description = "Добавляет координаты")
+    public ResponseEntity<CoordinatesDTO> addCoordinates(@Valid @RequestBody CoordinatesDTO coordinatesDTO) {
+        coordinatesDTO = coordinatesService.createCoordinates(coordinatesDTO);
+        return ResponseEntity.status(HttpStatus.CREATED).body(coordinatesDTO);
     }
+
     @GetMapping
-    public ResponseEntity<CoordinatesDTO> getCoordinates(Integer id){
-        CoordinatesDTO stub = new CoordinatesDTO(123d,123);
-        return ResponseEntity.status(HttpStatus.CREATED).body(stub);
+    @Operation(description = "Получает координаты по id")
+    public ResponseEntity<CoordinatesDTO> getCoordinates(Integer id) {
+        CoordinatesDTO coordinatesDTO = coordinatesService.findCoordinatesById(id);
+        return ResponseEntity.status(HttpStatus.FOUND).body(coordinatesDTO);
     }
 
 }

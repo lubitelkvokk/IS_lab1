@@ -1,5 +1,6 @@
 package itmo.is.lab1.dao;
 
+import itmo.is.lab1.exceptionHandler.DbException;
 import itmo.is.lab1.model.data.Coordinates;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
@@ -15,8 +16,9 @@ public class CoordinatesDAO {
     private EntityManager entityManager;
 
     @Transactional
-    public void save(Coordinates coordinates) {
+    public Coordinates save(Coordinates coordinates) {
         entityManager.persist(coordinates); // Сохраняет новый объект Coordinates в базе данных
+        return coordinates;
     }
 
     public Coordinates findById(int id) {
@@ -29,8 +31,12 @@ public class CoordinatesDAO {
     }
 
     @Transactional
-    public void update(Coordinates coordinates) {
-        entityManager.merge(coordinates); // Обновляет существующий объект Coordinates
+    public void update(Coordinates coordinates) throws DbException {
+        try {
+            entityManager.merge(coordinates); // Обновляет существующий объект Coordinates
+        } catch (IllegalArgumentException e){
+            throw new DbException("Such " + coordinates.getClass().getName() + " isn't in database");
+        }
     }
 
     @Transactional

@@ -10,7 +10,7 @@ public class CoordinatesMapper implements GenericMapper<Coordinates, Coordinates
         if (coordinates == null) {
             return null;
         }
-        return new CoordinatesDTO(coordinates.getX(), coordinates.getY());
+        return new CoordinatesDTO(coordinates.getId(), coordinates.getX(), coordinates.getY());
     }
 
     @Override
@@ -18,9 +18,7 @@ public class CoordinatesMapper implements GenericMapper<Coordinates, Coordinates
         if (coordinatesDTO == null) {
             return null;
         }
-        Coordinates coordinates = new Coordinates();
-        coordinates.setX(coordinatesDTO.getX());
-        coordinates.setY(coordinatesDTO.getY());
+        Coordinates coordinates = new Coordinates(coordinatesDTO.getId(), coordinatesDTO.getX(), coordinatesDTO.getY());
         return coordinates;
     }
 }

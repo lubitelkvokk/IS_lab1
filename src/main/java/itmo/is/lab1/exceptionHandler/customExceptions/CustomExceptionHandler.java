@@ -1,4 +1,4 @@
-package itmo.is.lab1.exceptionHandler;
+package itmo.is.lab1.exceptionHandler.customExceptions;
 import java.util.*;
 import java.util.stream.Collectors;
 
