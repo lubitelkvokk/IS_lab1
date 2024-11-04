@@ -1,4 +1,4 @@
-package itmo.is.lab1.obj_mapper;
+package itmo.is.lab1.objMapper;
 
 import itmo.is.lab1.DTO.model.auth.UserDTO;
 import itmo.is.lab1.model.auth.User;

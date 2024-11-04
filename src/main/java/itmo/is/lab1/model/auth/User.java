@@ -1,6 +1,8 @@
 package itmo.is.lab1.model.auth;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Size;
 import lombok.*;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -24,9 +26,13 @@ public class User implements UserDetails {
     private Long id;
 
     @Column(name = "username", unique = true, nullable = false)
+    @NotBlank(message = "username cannot be blank")
+    @Size(min = 8, message = "length of username must be at least 8 symbols")
     private String username;
 
     @Column(name = "password", nullable = false)
+    @NotBlank(message = "password cannot be blank")
+    @Size(min = 8, message = "length of username must be at least 8 symbols")
     private String password;
 
     @Enumerated(EnumType.STRING)

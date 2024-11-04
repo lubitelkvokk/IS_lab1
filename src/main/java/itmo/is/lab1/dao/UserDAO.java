@@ -4,6 +4,7 @@ import itmo.is.lab1.model.auth.User;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
 import jakarta.transaction.Transactional;
+import jakarta.validation.Valid;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -16,7 +17,7 @@ public class UserDAO {
     private EntityManager entityManager;
 
     // Find a user by username
-    public Optional<User> findByUsername(String username) {
+    public Optional<User> findByUsername(@Valid String username) {
         try {
             User user = entityManager.createQuery("SELECT u FROM User u WHERE u.username = :username", User.class)
                     .setParameter("username", username)

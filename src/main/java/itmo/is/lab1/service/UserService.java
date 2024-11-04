@@ -3,7 +3,6 @@ package itmo.is.lab1.service;
 import itmo.is.lab1.dao.UserDAO;
 import itmo.is.lab1.model.auth.Role;
 import itmo.is.lab1.model.auth.User;
-import itmo.is.lab1.obj_mapper.UserMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
