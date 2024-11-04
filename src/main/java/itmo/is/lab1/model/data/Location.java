@@ -15,13 +15,11 @@ public class Location {
     @Column(name = "id", nullable = false)
     private int id;
 
-    @NotNull(message = "X location cannot be null")
     @Column
     private Float x; //Поле не может быть null
     @Column
     private int y;
 
-    @NotNull
     @Column
     private String name; //Поле может быть null
 }
