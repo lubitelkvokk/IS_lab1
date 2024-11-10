@@ -23,7 +23,7 @@ public class CoordinatesService {
     }
 
     public CoordinatesDTO findCoordinatesById(Integer id) {
-        return coordinatesMapper.toDTO(coordinatesDAO.findById(id));
+        return coordinatesMapper.toDTO(coordinatesDAO.findById(id).orElseThrow());
     }
 
     public boolean isExistCoordinates(CoordinatesDTO coordinatesDTO) {
@@ -31,6 +31,6 @@ public class CoordinatesService {
     }
 
     public void updateCoordinatesById(CoordinatesDTO coordinatesDTO) throws DbException {
-        coordinatesDAO.update(coordinatesMapper.toEntity(coordinatesDTO));
+        coordinatesDAO.updateOrInsert(coordinatesMapper.toEntity(coordinatesDTO));
     }
 }

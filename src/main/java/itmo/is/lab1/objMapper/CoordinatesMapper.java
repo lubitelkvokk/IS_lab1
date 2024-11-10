@@ -2,7 +2,9 @@ package itmo.is.lab1.objMapper;
 
 import itmo.is.lab1.DTO.model.data.CoordinatesDTO;
 import itmo.is.lab1.model.data.Coordinates;
+import org.springframework.stereotype.Component;
 
+@Component
 public class CoordinatesMapper implements GenericMapper<Coordinates, CoordinatesDTO> {
 
     @Override

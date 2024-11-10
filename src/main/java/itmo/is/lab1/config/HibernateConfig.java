@@ -54,8 +54,5 @@ public class HibernateConfig {
         hibernateJpaVendorAdapter.setDatabase(Database.POSTGRESQL);
         return hibernateJpaVendorAdapter;
     }
-//    @Bean
-//    public JpaTransactionManager transactionManager(EntityManagerFactory entityManagerFactory) {
-//        return new JpaTransactionManager(entityManagerFactory);
-//    }
+
 }
