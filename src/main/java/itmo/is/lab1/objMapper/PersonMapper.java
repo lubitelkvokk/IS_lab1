@@ -2,7 +2,10 @@ package itmo.is.lab1.objMapper;
 
 import itmo.is.lab1.DTO.model.data.PersonDTO;
 import itmo.is.lab1.model.data.Person;
+import org.springframework.stereotype.Component;
+import org.springframework.web.bind.annotation.ControllerAdvice;
 
+@Component
 public class PersonMapper implements GenericMapper<Person, PersonDTO> {
 
     @Override

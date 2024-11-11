@@ -23,7 +23,6 @@ public class CoordinatesMapper implements GenericMapper<Coordinates, Coordinates
         }
         User user = new User();
         user.setId(coordinatesDTO.getUserId());
-        Coordinates coordinates = new Coordinates(coordinatesDTO.getId(), user, coordinatesDTO.getX(), coordinatesDTO.getY());
-        return coordinates;
+        return new Coordinates(coordinatesDTO.getId(), user, coordinatesDTO.getX(), coordinatesDTO.getY());
     }
 }
