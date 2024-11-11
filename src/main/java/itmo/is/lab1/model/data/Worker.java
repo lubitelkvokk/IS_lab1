@@ -1,5 +1,6 @@
 package itmo.is.lab1.model.data;
 
+import itmo.is.lab1.model.auth.User;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
@@ -19,8 +20,11 @@ public class Worker {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     @Column(name = "id", nullable = false, unique = true)
-    private int id; // Значение должно быть больше 0, уникально, генерируется автоматически
+    private Integer id; // Значение должно быть больше 0, уникально, генерируется автоматически
 
+    @ManyToOne
+    @JoinColumn(name = "user_id")
+    private User user;
     @Column(name = "name", nullable = false)
     private String name; // Поле не может быть null, строка не может быть пустой
 

@@ -1,6 +1,7 @@
 package itmo.is.lab1.objMapper;
 
 import itmo.is.lab1.DTO.model.data.CoordinatesDTO;
+import itmo.is.lab1.model.auth.User;
 import itmo.is.lab1.model.data.Coordinates;
 import org.springframework.stereotype.Component;
 
@@ -12,7 +13,7 @@ public class CoordinatesMapper implements GenericMapper<Coordinates, Coordinates
         if (coordinates == null) {
             return null;
         }
-        return new CoordinatesDTO(coordinates.getId(), coordinates.getX(), coordinates.getY());
+        return new CoordinatesDTO(coordinates.getId(), coordinates.getUser().getId(), coordinates.getX(), coordinates.getY());
     }
 
     @Override
@@ -20,7 +21,9 @@ public class CoordinatesMapper implements GenericMapper<Coordinates, Coordinates
         if (coordinatesDTO == null) {
             return null;
         }
-        Coordinates coordinates = new Coordinates(coordinatesDTO.getId(), coordinatesDTO.getX(), coordinatesDTO.getY());
+        User user = new User();
+        user.setId(coordinatesDTO.getUserId());
+        Coordinates coordinates = new Coordinates(coordinatesDTO.getId(), user, coordinatesDTO.getX(), coordinatesDTO.getY());
         return coordinates;
     }
 }

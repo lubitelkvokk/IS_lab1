@@ -1,6 +1,7 @@
 package itmo.is.lab1.service;
 
 import itmo.is.lab1.dao.UserDAO;
+import itmo.is.lab1.exceptionHandler.DbException;
 import itmo.is.lab1.model.auth.Role;
 import itmo.is.lab1.model.auth.User;
 import lombok.RequiredArgsConstructor;
@@ -33,10 +34,10 @@ public class UserService {
      *
      * @return созданный пользователь
      */
-    public User create(User user) {
+    public User create(User user) throws DbException {
         if (userDAO.existsByUsername(user.getUsername())) {
             // Заменить на свои исключения
-            throw new RuntimeException("Пользователь с таким именем уже существует");
+            throw new DbException("Пользователь с таким именем уже существует");
         }
 
         return save(user);

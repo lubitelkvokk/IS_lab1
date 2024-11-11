@@ -1,5 +1,6 @@
 package itmo.is.lab1.model.data;
 
+import itmo.is.lab1.model.auth.User;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
@@ -18,6 +19,9 @@ public class Organization {
     @Column(name = "id", nullable = false)
     private Integer id;
 
+    @ManyToOne
+    @JoinColumn(name = "user_id")
+    private User user;
     @JoinColumn(name = "official_address_id", referencedColumnName = "id")
     @OneToOne(cascade = CascadeType.ALL)
     private Address officialAddress; // Поле не может быть null

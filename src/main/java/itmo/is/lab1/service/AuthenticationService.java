@@ -2,6 +2,7 @@ package itmo.is.lab1.service;
 
 import itmo.is.lab1.DTO.model.auth.JwtAuthenticationResponse;
 import itmo.is.lab1.DTO.model.auth.SignRequest;
+import itmo.is.lab1.exceptionHandler.DbException;
 import itmo.is.lab1.model.auth.Role;
 import itmo.is.lab1.model.auth.User;
 import lombok.RequiredArgsConstructor;
@@ -29,7 +30,7 @@ public class AuthenticationService {
      * @param request данные пользователя
      * @return токен
      */
-    public JwtAuthenticationResponse signUp(SignRequest request) {
+    public JwtAuthenticationResponse signUp(SignRequest request) throws DbException {
 
         var user = User.builder()
                 .username(request.getUsername())

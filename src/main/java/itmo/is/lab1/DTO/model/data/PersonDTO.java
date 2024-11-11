@@ -11,6 +11,11 @@ import io.swagger.v3.oas.annotations.media.Schema;
 @Schema(description = "Объект передачи данных, представляющий информацию о человеке")
 public class PersonDTO {
 
+    @Schema(description = "id выдается после добавления в бд")
+    private Integer id;
+
+    @Schema(description = "id владельца объекта")
+    private Integer userId;
     @NotNull(message = "Цвет глаз не может быть null")
     @Schema(description = "Цвет глаз человека", requiredMode = Schema.RequiredMode.REQUIRED, example = "BROWN")
     private Color eyeColor; // Поле не может быть null

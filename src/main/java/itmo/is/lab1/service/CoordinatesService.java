@@ -19,7 +19,6 @@ public class CoordinatesService {
 
     public CoordinatesDTO createCoordinates(CoordinatesDTO coordinatesDTO) {
         return coordinatesMapper.toDTO(coordinatesDAO.save(coordinatesMapper.toEntity(coordinatesDTO)));
-
     }
 
     public CoordinatesDTO findCoordinatesById(Integer id) {

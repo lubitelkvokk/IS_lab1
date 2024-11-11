@@ -8,7 +8,9 @@ import lombok.Data;
 @Data
 public class AddressDTO {
 
-
+    private Integer id;
+    @Schema(description = "id владельца объекта")
+    private Integer userId;
     @NotNull(message = "Address's street name cannot be null")
     @Size(max = 196, message = "Size of address's street name must be less than 197")
     @Schema(description = "Название улицы", requiredMode = Schema.RequiredMode.REQUIRED, example = "Koroleva 21")

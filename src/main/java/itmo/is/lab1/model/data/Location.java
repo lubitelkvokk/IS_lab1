@@ -1,5 +1,6 @@
 package itmo.is.lab1.model.data;
 
+import itmo.is.lab1.model.auth.User;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import lombok.Data;
@@ -13,8 +14,11 @@ public class Location {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     @Column(name = "id", nullable = false)
-    private int id;
+    private Integer id;
 
+    @ManyToOne
+    @JoinColumn(name = "user_id")
+    private User user;
     @Column
     private Float x; //Поле не может быть null
     @Column

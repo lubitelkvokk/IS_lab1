@@ -14,6 +14,8 @@ public class WorkerDTO {
     @Schema(description = "Идентификатор рабочего. Значение должно быть больше 0, уникальным и генерироваться автоматически", example = "1")
     private int id; // Значение поля должно быть больше 0, Значение этого поля должно быть уникальным, Значение этого поля должно генерироваться автоматически
 
+    @Schema(description = "id владельца объекта")
+    private Integer userId;
     @NotBlank(message = "Имя не может быть null или пустым")
     @Schema(description = "Имя рабочего. Поле не может быть null или пустым", required = true, example = "Иван Иванов")
     private String name; // Поле не может быть null, Строка не может быть пустой

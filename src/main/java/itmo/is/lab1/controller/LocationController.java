@@ -9,17 +9,16 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("api/location")
 public class LocationController {
 
-    @PostMapping
-    public ResponseEntity<LocationDTO> addLocation(@RequestBody LocationDTO locationDTO) {
-        // Stub for demonstration purposes
-        LocationDTO stub = new LocationDTO(123.45f, 200, "Sample Location");
-        return ResponseEntity.status(HttpStatus.CREATED).body(stub);
-    }
-
-    @GetMapping
-    public ResponseEntity<LocationDTO> getLocation(@RequestParam Integer id) {
-        // Stub for demonstration purposes
-        LocationDTO stub = new LocationDTO(123.45f, 200, "Sample Location");
-        return ResponseEntity.status(HttpStatus.OK).body(stub);
-    }
+//    @PostMapping
+//    public ResponseEntity<LocationDTO> addLocation(@RequestBody LocationDTO locationDTO) {
+//        // Stub for demonstration purposes
+//        return ResponseEntity.status(HttpStatus.CREATED).body(stub);
+//    }
+//
+//    @GetMapping
+//    public ResponseEntity<LocationDTO> getLocation(@RequestParam Integer id) {
+//        // Stub for demonstration purposes
+//        LocationDTO stub = new LocationDTO(123.45f, 200, "Sample Location");
+//        return ResponseEntity.status(HttpStatus.OK).body(stub);
+//    }
 }

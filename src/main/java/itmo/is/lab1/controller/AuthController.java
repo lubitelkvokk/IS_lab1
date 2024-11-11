@@ -4,6 +4,7 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import itmo.is.lab1.DTO.model.auth.JwtAuthenticationResponse;
 import itmo.is.lab1.DTO.model.auth.SignRequest;
+import itmo.is.lab1.exceptionHandler.DbException;
 import itmo.is.lab1.service.AuthenticationService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -21,7 +22,7 @@ public class AuthController {
 
     @Operation(summary = "Регистрация пользователя")
     @PostMapping("/sign-up")
-    public JwtAuthenticationResponse signUp(@RequestBody @Valid SignRequest request) {
+    public JwtAuthenticationResponse signUp(@RequestBody @Valid SignRequest request) throws DbException {
         return authenticationService.signUp(request);
     }
 

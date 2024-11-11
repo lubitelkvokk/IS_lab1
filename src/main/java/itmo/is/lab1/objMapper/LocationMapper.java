@@ -1,6 +1,7 @@
 package itmo.is.lab1.objMapper;
 
 import itmo.is.lab1.DTO.model.data.LocationDTO;
+import itmo.is.lab1.model.auth.User;
 import itmo.is.lab1.model.data.Location;
 
 public class LocationMapper implements GenericMapper<Location, LocationDTO> {
@@ -11,6 +12,8 @@ public class LocationMapper implements GenericMapper<Location, LocationDTO> {
             return null;
         }
         return new LocationDTO(
+                location.getId(),
+                location.getUser().getId(),
                 location.getX(),
                 location.getY(),
                 location.getName()
@@ -23,6 +26,8 @@ public class LocationMapper implements GenericMapper<Location, LocationDTO> {
             return null;
         }
         Location location = new Location();
+        User user = new User();
+        user.setId(locationDTO.getUserId());
         location.setX(locationDTO.getX());
         location.setY(locationDTO.getY());
         location.setName(locationDTO.getName());

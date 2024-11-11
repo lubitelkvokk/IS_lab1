@@ -14,4 +14,5 @@ public interface CoordinatesDAO extends JpaRepository<Coordinates, Integer> {
     default Coordinates updateOrInsert(Coordinates entity) {
         return save(entity);
     }
+
 }

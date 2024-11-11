@@ -12,6 +12,11 @@ import lombok.Data;
 @Schema(description = "Объект передачи данных, представляющий информацию об организации")
 public class OrganizationDTO {
 
+    @Schema(description = "id выдается после добавления в бд")
+    private Integer id;
+
+    @Schema(description = "id владельца объекта")
+    private Integer userId;
     @NotNull(message = "Официальный адрес не может быть null")
     @Schema(description = "Официальный адрес организации", requiredMode = Schema.RequiredMode.REQUIRED)
     private Address officialAddress; // Поле не может быть null

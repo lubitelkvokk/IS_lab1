@@ -9,6 +9,11 @@ import jakarta.validation.constraints.NotNull;
 @AllArgsConstructor
 @Schema(description = "Объект передачи данных, представляющий местоположение")
 public class LocationDTO {
+    @Schema(description = "id выдается после добавления в бд")
+    private Integer id;
+
+    @Schema(description = "id владельца объекта")
+    private Integer userId;
 
     @NotNull(message = "X координата не может быть null")
     @Schema(description = "X координата", requiredMode = Schema.RequiredMode.REQUIRED, example = "45.3")

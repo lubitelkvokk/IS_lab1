@@ -4,6 +4,8 @@ import java.util.*;
 import java.util.stream.Collectors;
 
 import io.jsonwebtoken.ExpiredJwtException;
+import itmo.is.lab1.exceptionHandler.DbException;
+import itmo.is.lab1.exceptionHandler.NotEnoughAccessLevelToData;
 import org.springframework.context.support.DefaultMessageSourceResolvable;
 import org.springframework.http.*;
 import org.springframework.web.bind.MethodArgumentNotValidException;
@@ -45,5 +47,28 @@ public class CustomExceptionHandler extends ResponseEntityExceptionHandler {
         responseBody.put("message", ex.getMessage());
 
         return new ResponseEntity<>(responseBody, HttpStatus.UNAUTHORIZED);
+    }
+    @ExceptionHandler({NotEnoughAccessLevelToData.class})
+    public ResponseEntity<Object> handleNotEnoughAccessLevelToData(
+            NotEnoughAccessLevelToData ex, WebRequest request) {
+
+        Map<String, Object> responseBody = new LinkedHashMap<>();
+        responseBody.put("timestamp", new Date());
+        responseBody.put("status", HttpStatus.UNAUTHORIZED.value());
+        responseBody.put("error", "Attempt to access someone else's data");
+        responseBody.put("message", ex.getMessage());
+
+        return new ResponseEntity<>(responseBody, HttpStatus.FORBIDDEN);
+    }
+    @ExceptionHandler({DbException.class})
+    public ResponseEntity<Object> handleDbException(
+            DbException ex, WebRequest request) {
+
+        Map<String, Object> responseBody = new LinkedHashMap<>();
+        responseBody.put("timestamp", new Date());
+        responseBody.put("status", HttpStatus.NOT_FOUND.value());
+        responseBody.put("error", ex.getMessage());
+
+        return new ResponseEntity<>(responseBody, HttpStatus.FORBIDDEN);
     }
 }
