@@ -2,6 +2,9 @@ package itmo.is.lab1.objMapper;
 
 import itmo.is.lab1.DTO.model.data.WorkerDTO;
 import itmo.is.lab1.model.auth.User;
+import itmo.is.lab1.model.data.Coordinates;
+import itmo.is.lab1.model.data.Organization;
+import itmo.is.lab1.model.data.Person;
 import itmo.is.lab1.model.data.Worker;
 import org.springframework.stereotype.Component;
 
@@ -17,15 +20,15 @@ public class WorkerMapper implements GenericMapper<Worker, WorkerDTO> {
         workerDTO.setId(worker.getId());
         workerDTO.setUserId(worker.getUser().getId());
         workerDTO.setName(worker.getName());
-        workerDTO.setCoordinates(worker.getCoordinates());
+        workerDTO.setCoordinatesId(worker.getCoordinates().getId());
         workerDTO.setCreationDate(worker.getCreationDate());
-        workerDTO.setOrganization(worker.getOrganization());
+        workerDTO.setOrganizationId(worker.getOrganization().getId());
         workerDTO.setSalary(worker.getSalary());
         workerDTO.setRating(worker.getRating());
         workerDTO.setEndDate(worker.getEndDate());
         workerDTO.setPosition(worker.getPosition());
         workerDTO.setStatus(worker.getStatus());
-        workerDTO.setPerson(worker.getPerson());
+        workerDTO.setPersonId(worker.getPerson().getId());
         return workerDTO;
     }
 
@@ -45,15 +48,21 @@ public class WorkerMapper implements GenericMapper<Worker, WorkerDTO> {
         }
 
         worker.setName(workerDTO.getName());
-        worker.setCoordinates(workerDTO.getCoordinates());
+        Coordinates coordinates = new Coordinates();
+        coordinates.setId(workerDTO.getCoordinatesId());
+        worker.setCoordinates(coordinates);
         worker.setCreationDate(workerDTO.getCreationDate());
-        worker.setOrganization(workerDTO.getOrganization());
+        Organization organization = new Organization();
+        organization.setId(workerDTO.getOrganizationId());
+        worker.setOrganization(organization);
         worker.setSalary(workerDTO.getSalary());
         worker.setRating(workerDTO.getRating());
         worker.setEndDate(workerDTO.getEndDate());
         worker.setPosition(workerDTO.getPosition());
         worker.setStatus(workerDTO.getStatus());
-        worker.setPerson(workerDTO.getPerson());
+        Person person = new Person();
+        person.setId(workerDTO.getPersonId());
+        worker.setPerson(person);
 
         return worker;
     }

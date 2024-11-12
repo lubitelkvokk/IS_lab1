@@ -1,32 +1,56 @@
 package itmo.is.lab1.service;
 
 import itmo.is.lab1.DTO.model.data.WorkerDTO;
+import itmo.is.lab1.dao.CoordinatesDAO;
+import itmo.is.lab1.dao.OrganizationDAO;
+import itmo.is.lab1.dao.PersonDAO;
 import itmo.is.lab1.dao.WorkerDAO;
 import itmo.is.lab1.exceptionHandler.DbException;
 import itmo.is.lab1.exceptionHandler.NotEnoughAccessLevelToData;
 import itmo.is.lab1.model.auth.User;
+import itmo.is.lab1.model.data.Coordinates;
+import itmo.is.lab1.model.data.Organization;
+import itmo.is.lab1.model.data.Person;
 import itmo.is.lab1.model.data.Worker;
 import itmo.is.lab1.objMapper.WorkerMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.Objects;
 import java.util.Date;
+import java.util.Objects;
 
 @Service
 public class WorkerService {
 
     @Autowired
     private WorkerDAO workerDAO;
+    @Autowired
+    private OrganizationDAO organizationDAO;
+    @Autowired
+    private CoordinatesDAO coordinatesDAO;
+    @Autowired
+    private PersonDAO personDAO;
 
     @Autowired
     private WorkerMapper workerMapper;
 
-    public WorkerDTO createWorker(WorkerDTO workerDTO, User user) {
-        workerDTO.setUserId(user.getId()); // Установка userId в DTO
+    public WorkerDTO createWorker(WorkerDTO workerDTO, User user) throws DbException {
         Worker worker = workerMapper.toEntity(workerDTO);
         worker.setUser(user); // Привязываем пользователя к сущности Worker
         worker.setCreationDate(new Date()); // Устанавливаем текущую дату как дату создания
+
+        Organization existingOrganization = organizationDAO.findById(workerDTO.getOrganizationId())
+                .orElseThrow(() -> new DbException("Organization not found with id: " + workerDTO.getOrganizationId()));
+        worker.setOrganization(existingOrganization);
+
+        Coordinates existingCoordinates = coordinatesDAO.findById(workerDTO.getCoordinatesId())
+                .orElseThrow(() -> new DbException("Location not found with id: " + workerDTO.getCoordinatesId()));
+        worker.setCoordinates(existingCoordinates);
+
+        Person existingPerson = personDAO.findById(workerDTO.getPersonId())
+                .orElseThrow(() -> new DbException("Person not found with id: " + workerDTO.getPersonId()));
+        worker.setPerson(existingPerson);
+
         Worker savedWorker = workerDAO.save(worker);
         return workerMapper.toDTO(savedWorker);
     }
@@ -54,14 +78,24 @@ public class WorkerService {
 
         // Обновление полей
         worker.setName(workerDTO.getName());
-        worker.setCoordinates(workerDTO.getCoordinates());
-        worker.setOrganization(workerDTO.getOrganization());
+
+        Organization existingOrganization = organizationDAO.findById(workerDTO.getOrganizationId())
+                .orElseThrow(() -> new DbException("Organization not found with id: " + workerDTO.getOrganizationId()));
+        worker.setOrganization(existingOrganization);
+
+        Coordinates existingCoordinates = coordinatesDAO.findById(workerDTO.getCoordinatesId())
+                .orElseThrow(() -> new DbException("Location not found with id: " + workerDTO.getCoordinatesId()));
+
+        worker.setCoordinates(existingCoordinates);
         worker.setSalary(workerDTO.getSalary());
         worker.setRating(workerDTO.getRating());
         worker.setEndDate(workerDTO.getEndDate());
         worker.setPosition(workerDTO.getPosition());
         worker.setStatus(workerDTO.getStatus());
-        worker.setPerson(workerDTO.getPerson());
+
+        Person existingPerson = personDAO.findById(workerDTO.getPersonId())
+                .orElseThrow(() -> new DbException("Person not found with id: " + workerDTO.getPersonId()));
+        worker.setPerson(existingPerson);
 
         workerDAO.save(worker);
     }

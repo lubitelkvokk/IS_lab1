@@ -22,7 +22,7 @@ public class WorkerDTO {
 
     @NotNull(message = "Координаты не могут быть null")
     @Schema(description = "Координаты рабочего. Поле не может быть null", required = true)
-    private Coordinates coordinates; // Поле не может быть null
+    private Integer coordinatesId; // Поле не может быть null
 
     @NotNull(message = "Дата создания не может быть null")
     @Schema(description = "Дата создания рабочего. Поле не может быть null, значение должно генерироваться автоматически", required = true, example = "2023-11-04T15:30:00Z")
@@ -30,7 +30,7 @@ public class WorkerDTO {
 
     @NotNull(message = "Организация не может быть null")
     @Schema(description = "Организация рабочего. Поле не может быть null", required = true)
-    private Organization organization; // Поле не может быть null
+    private Integer organizationId; // Поле не может быть null
 
     @Min(value = 1, message = "Зарплата должна быть больше 0")
     @Schema(description = "Зарплата рабочего. Значение должно быть больше 0", example = "50000")
@@ -53,5 +53,5 @@ public class WorkerDTO {
 
     @NotNull(message = "Персональные данные не могут быть null")
     @Schema(description = "Персональные данные рабочего. Поле не может быть null", required = true)
-    private Person person; // Поле не может быть null
+    private Integer personId; // Поле не может быть null
 }

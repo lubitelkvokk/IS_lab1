@@ -22,14 +22,15 @@ public class WorkerController {
 
     @PostMapping
     @Operation(description = "Создает нового рабочего")
-    public ResponseEntity<WorkerDTO> createWorker(@AuthenticationPrincipal User user, @Valid @RequestBody WorkerDTO workerDTO) {
+    public ResponseEntity<WorkerDTO> createWorker(@AuthenticationPrincipal User user, @RequestBody WorkerDTO workerDTO) throws DbException {
+        System.out.println(workerDTO.getId());
         WorkerDTO createdWorker = workerService.createWorker(workerDTO, user);
         return ResponseEntity.status(HttpStatus.CREATED).body(createdWorker);
     }
 
-    @GetMapping("/{id}")
+    @GetMapping()
     @Operation(description = "Получает информацию о рабочем по id")
-    public ResponseEntity<WorkerDTO> getWorker(@PathVariable Integer id, @AuthenticationPrincipal User user) throws DbException, NotEnoughAccessLevelToData {
+    public ResponseEntity<WorkerDTO> getWorker(Integer id, @AuthenticationPrincipal User user) throws DbException, NotEnoughAccessLevelToData {
         WorkerDTO workerDTO = workerService.getWorkerById(id, user);
         return ResponseEntity.status(HttpStatus.OK).body(workerDTO);
     }
@@ -41,9 +42,9 @@ public class WorkerController {
         return ResponseEntity.status(HttpStatus.OK).body("Worker updated successfully");
     }
 
-    @DeleteMapping("/{id}")
+    @DeleteMapping()
     @Operation(description = "Удаляет запись о рабочем по id")
-    public ResponseEntity<String> deleteWorker(@PathVariable Integer id, @AuthenticationPrincipal User user) throws NotEnoughAccessLevelToData, DbException {
+    public ResponseEntity<String> deleteWorker(Integer id, @AuthenticationPrincipal User user) throws NotEnoughAccessLevelToData, DbException {
         workerService.deleteWorker(id, user);
         return ResponseEntity.status(HttpStatus.OK).body("Worker deleted successfully");
     }
