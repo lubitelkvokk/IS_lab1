@@ -22,15 +22,16 @@ public class OrganizationController {
 
     @PostMapping
     @Operation(description = "Создает новую организацию")
-    public ResponseEntity<OrganizationDTO> createOrganization(@AuthenticationPrincipal User user, @Valid @RequestBody OrganizationDTO organizationDTO) {
+    public ResponseEntity<OrganizationDTO> createOrganization( @AuthenticationPrincipal User user, @Valid @RequestBody OrganizationDTO organizationDTO) throws DbException {
         OrganizationDTO createdOrganization = organizationService.createOrganization(organizationDTO, user);
+
         return ResponseEntity.status(HttpStatus.CREATED).body(createdOrganization);
     }
 
 
-    @GetMapping("/{id}")
+    @GetMapping()
     @Operation(description = "Получает информацию об организации по id")
-    public ResponseEntity<OrganizationDTO> getOrganization(@PathVariable Integer id, @AuthenticationPrincipal User user) throws DbException, NotEnoughAccessLevelToData {
+    public ResponseEntity<OrganizationDTO> getOrganization(Integer id, @AuthenticationPrincipal User user) throws DbException, NotEnoughAccessLevelToData {
         OrganizationDTO organizationDTO = organizationService.getOrganizationById(id, user);
         return ResponseEntity.status(HttpStatus.OK).body(organizationDTO);
     }
@@ -42,9 +43,9 @@ public class OrganizationController {
         return ResponseEntity.status(HttpStatus.OK).body("Organization updated successfully");
     }
 
-    @DeleteMapping("/{id}")
+    @DeleteMapping()
     @Operation(description = "Удаляет организацию по id")
-    public ResponseEntity<String> deleteOrganization(@PathVariable Integer id, @AuthenticationPrincipal User user) throws NotEnoughAccessLevelToData, DbException {
+    public ResponseEntity<String> deleteOrganization(Integer id, @AuthenticationPrincipal User user) throws NotEnoughAccessLevelToData, DbException {
         organizationService.deleteOrganization(id, user);
         return ResponseEntity.status(HttpStatus.OK).body("Organization deleted successfully");
     }

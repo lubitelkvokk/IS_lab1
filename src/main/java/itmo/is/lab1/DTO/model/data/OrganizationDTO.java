@@ -19,7 +19,7 @@ public class OrganizationDTO {
     private Integer userId;
     @NotNull(message = "Официальный адрес не может быть null")
     @Schema(description = "Официальный адрес организации", requiredMode = Schema.RequiredMode.REQUIRED)
-    private Address officialAddress; // Поле не может быть null
+    private Integer addressId; // Поле не может быть null
 
     @Min(value = 1, message = "Годовой оборот должен быть больше 0")
     @Schema(description = "Сумма денег, которую бизнес получает от продажи своих продуктов или услуг в течение года", requiredMode = Schema.RequiredMode.REQUIRED, example = "5000000")

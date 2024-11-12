@@ -23,8 +23,11 @@ public class AddressService {
     @Autowired
     private AddressMapper addressMapper;
 
-    public void createAddress(AddressDTO addressDTO) {
-        addressDAO.save(addressMapper.toEntity(addressDTO));
+    public AddressDTO createAddress(AddressDTO addressDTO) {
+        Address address = addressMapper.toEntity(addressDTO);
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        address.setUser((User) authentication.getPrincipal());
+        return addressMapper.toDTO(addressDAO.save(address));
     }
 
     public AddressDTO getAddressById(Integer id) throws NotEnoughAccessLevelToData, DbException {

@@ -2,6 +2,7 @@ package itmo.is.lab1.model.data;
 
 import itmo.is.lab1.model.auth.User;
 import jakarta.persistence.*;
+import jakarta.validation.Constraint;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
@@ -22,24 +23,28 @@ public class Organization {
     @ManyToOne
     @JoinColumn(name = "user_id")
     private User user;
-    @JoinColumn(name = "official_address_id", referencedColumnName = "id")
-    @OneToOne(cascade = CascadeType.ALL)
-    private Address officialAddress; // Поле не может быть null
+    @ManyToOne
+    @JoinColumn(name = "official_address_id", referencedColumnName = "id", nullable = false)
+    private Address officialAddress;
 
-    @Column(name = "annual_turnover")
+
+    @Column(name = "annual_turnover",
+            nullable = false)
     private Integer annualTurnover; // Поле может быть null, значение должно быть больше 0
 
-    @Column(name = "employees_count", nullable = false)
+    @Column(name = "employees_count",
+            nullable = false)
     private long employeesCount; // Значение должно быть больше 0
 
     @Column(name = "full_name")
     private String fullName; // Длина не должна быть больше 1272, не может быть пустой, может быть null
 
-    @Column(name = "rating", nullable = false)
+    @Column(name = "rating")
     private double rating; // Значение должно быть больше 0
 
     @Enumerated(EnumType.STRING)
-    @Column(name = "type")
+    @Column(name = "type",
+            nullable = false)
     private OrganizationType type; // Поле может быть null
 
 }

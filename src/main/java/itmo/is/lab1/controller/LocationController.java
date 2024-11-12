@@ -27,9 +27,9 @@ public class LocationController {
         return ResponseEntity.status(HttpStatus.CREATED).body(createdLocation);
     }
 
-    @GetMapping("/{id}")
+    @GetMapping()
     @Operation(description = "Получает информацию о местоположении по id")
-    public ResponseEntity<LocationDTO> getLocation(@PathVariable Integer id, @AuthenticationPrincipal User user) throws DbException, NotEnoughAccessLevelToData {
+    public ResponseEntity<LocationDTO> getLocation(Integer id, @AuthenticationPrincipal User user) throws DbException, NotEnoughAccessLevelToData {
         LocationDTO locationDTO = locationService.getLocationById(id, user);
         return ResponseEntity.status(HttpStatus.OK).body(locationDTO);
     }
@@ -41,9 +41,9 @@ public class LocationController {
         return ResponseEntity.status(HttpStatus.OK).body("Location updated successfully");
     }
 
-    @DeleteMapping("/{id}")
+    @DeleteMapping()
     @Operation(description = "Удаляет местоположение по id")
-    public ResponseEntity<String> deleteLocation(@PathVariable Integer id, @AuthenticationPrincipal User user) throws NotEnoughAccessLevelToData, DbException {
+    public ResponseEntity<String> deleteLocation(Integer id, @AuthenticationPrincipal User user) throws NotEnoughAccessLevelToData, DbException {
         locationService.deleteLocation(id, user);
         return ResponseEntity.status(HttpStatus.OK).body("Location deleted successfully");
     }

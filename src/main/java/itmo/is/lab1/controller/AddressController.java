@@ -19,8 +19,7 @@ public class AddressController {
 
     @PostMapping
     public ResponseEntity<AddressDTO> createAddress(@Valid @RequestBody AddressDTO addressDTO) {
-        // TODO где-то получить id пользователя и вставить в addressDTO.userId
-        addressService.createAddress(addressDTO);
+        addressDTO = addressService.createAddress(addressDTO);
         return ResponseEntity.status(HttpStatus.CREATED).body(addressDTO);
     }
 

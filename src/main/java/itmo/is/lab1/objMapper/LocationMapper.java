@@ -3,7 +3,9 @@ package itmo.is.lab1.objMapper;
 import itmo.is.lab1.DTO.model.data.LocationDTO;
 import itmo.is.lab1.model.auth.User;
 import itmo.is.lab1.model.data.Location;
+import org.springframework.stereotype.Component;
 
+@Component
 public class LocationMapper implements GenericMapper<Location, LocationDTO> {
 
     @Override

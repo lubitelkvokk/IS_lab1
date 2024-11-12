@@ -27,9 +27,6 @@ public class AddressMapper implements GenericMapper<Address, AddressDTO> {
             return null;
         }
         Address address = new Address();
-        User user = new User();
-        user.setId(addressDTO.getUserId());
-        address.setUser(user);
         address.setStreet(addressDTO.getStreet());
         address.setZipCode(addressDTO.getZipCode());
         return address;

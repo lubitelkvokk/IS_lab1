@@ -25,9 +25,9 @@ public class CoordinatesController {
         return ResponseEntity.status(HttpStatus.CREATED).body(coordinatesDTO);
     }
 
-    @GetMapping("/{id}")
+    @GetMapping()
     @Operation(description = "Получает координаты по id")
-    public ResponseEntity<CoordinatesDTO> getCoordinates(@PathVariable Integer id) throws DbException, NotEnoughAccessLevelToData {
+    public ResponseEntity<CoordinatesDTO> getCoordinates(Integer id) throws DbException, NotEnoughAccessLevelToData {
         CoordinatesDTO coordinatesDTO = coordinatesService.findCoordinatesById(id);
         return ResponseEntity.status(HttpStatus.OK).body(coordinatesDTO);
     }
@@ -39,9 +39,9 @@ public class CoordinatesController {
         return ResponseEntity.status(HttpStatus.OK).body("Successful updating of coordinates");
     }
 
-    @DeleteMapping("/{id}")
+    @DeleteMapping()
     @Operation(description = "Удаляет координаты по id")
-    public ResponseEntity<String> deleteCoordinates(@PathVariable Integer id) throws NotEnoughAccessLevelToData, DbException {
+    public ResponseEntity<String> deleteCoordinates(Integer id) throws NotEnoughAccessLevelToData, DbException {
         coordinatesService.deleteCoordinatesById(id);
         return ResponseEntity.status(HttpStatus.OK).body("Successful deleting");
     }

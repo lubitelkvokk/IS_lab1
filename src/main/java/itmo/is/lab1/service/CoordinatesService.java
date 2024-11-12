@@ -25,6 +25,9 @@ public class CoordinatesService {
 
     public CoordinatesDTO createCoordinates(CoordinatesDTO coordinatesDTO) {
         Coordinates coordinates = coordinatesMapper.toEntity(coordinatesDTO);
+
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        coordinates.setUser((User) authentication.getPrincipal());
         return coordinatesMapper.toDTO(coordinatesDAO.save(coordinates));
     }
 
