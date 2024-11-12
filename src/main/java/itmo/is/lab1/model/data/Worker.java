@@ -28,7 +28,7 @@ public class Worker {
     @Column(name = "name", nullable = false)
     private String name; // Поле не может быть null, строка не может быть пустой
 
-    @OneToOne(cascade = CascadeType.ALL)
+    @ManyToOne()
     @JoinColumn(name = "coordinates_id", referencedColumnName = "id")
     private Coordinates coordinates; // Поле не может быть null
 
@@ -36,7 +36,7 @@ public class Worker {
     @Column(name = "creation_date", nullable = false, updatable = false)
     private Date creationDate; // Поле не может быть null, генерируется автоматически
 
-    @OneToOne(cascade = CascadeType.ALL)
+    @ManyToOne()
     @JoinColumn(name = "organization_id", referencedColumnName = "id")
     private Organization organization; // Поле не может быть null
 
@@ -57,7 +57,7 @@ public class Worker {
     @Column(name = "status", nullable = false)
     private Status status; // Поле не может быть null
 
-    @OneToOne(cascade = CascadeType.ALL)
+    @ManyToOne()
     @JoinColumn(name = "person_id", referencedColumnName = "id")
     private Person person; // Поле не может быть null
 }

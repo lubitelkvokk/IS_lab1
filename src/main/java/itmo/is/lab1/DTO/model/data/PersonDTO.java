@@ -25,7 +25,7 @@ public class PersonDTO {
     private Color hairColor; // Поле не может быть null
 
     @Schema(description = "Местоположение человека, может быть null", requiredMode = Schema.RequiredMode.REQUIRED)
-    private Location location; // Поле может быть null
+    private Integer locationId; // Поле может быть null
 
     @NotNull(message = "Дата рождения не может быть null")
     @Schema(description = "Дата рождения человека в формате ISO 8601", requiredMode = Schema.RequiredMode.REQUIRED, example = "1990-05-20T15:30:00Z")

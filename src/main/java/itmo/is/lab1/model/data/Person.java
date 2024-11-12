@@ -29,7 +29,7 @@ public class Person {
     @Column(name = "hair_color", nullable = false)
     private Color hairColor; // Поле не может быть null
 
-    @OneToOne(cascade = CascadeType.ALL)
+    @ManyToOne()
     @JoinColumn(name = "location_id", referencedColumnName = "id")
     private Location location; // Поле может быть null
 

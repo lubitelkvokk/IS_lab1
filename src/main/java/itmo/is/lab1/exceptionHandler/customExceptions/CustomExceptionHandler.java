@@ -8,6 +8,7 @@ import itmo.is.lab1.exceptionHandler.DbException;
 import itmo.is.lab1.exceptionHandler.NotEnoughAccessLevelToData;
 import org.springframework.context.support.DefaultMessageSourceResolvable;
 import org.springframework.http.*;
+import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -16,11 +17,22 @@ import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExcep
 
 @ControllerAdvice
 public class CustomExceptionHandler extends ResponseEntityExceptionHandler {
+    @Override
+    protected ResponseEntity<Object> handleHttpMessageNotReadable(
+            HttpMessageNotReadableException ex, HttpHeaders headers, HttpStatusCode status, WebRequest request) {
 
-    protected ResponseEntity<Object> handleMethodArgumentNotValid(MethodArgumentNotValidException ex,
-                                                                  HttpHeaders headers,
-                                                                  HttpStatus status,
-                                                                  WebRequest request) {
+        Map<String, Object> responseBody = new LinkedHashMap<>();
+        responseBody.put("timestamp", new Date());
+        responseBody.put("status", HttpStatus.BAD_REQUEST.value());
+        responseBody.put("error", "Invalid request format");
+        responseBody.put("message", ex.getMostSpecificCause().getMessage()); // Более точное сообщение об ошибке
+
+        return new ResponseEntity<>(responseBody, headers, HttpStatus.BAD_REQUEST);
+    }
+
+    @Override
+    protected ResponseEntity<Object> handleMethodArgumentNotValid(
+            MethodArgumentNotValidException ex, HttpHeaders headers, HttpStatusCode status, WebRequest request) {
 
         Map<String, Object> responseBody = new LinkedHashMap<>();
         responseBody.put("timestamp", new Date());
@@ -48,6 +60,7 @@ public class CustomExceptionHandler extends ResponseEntityExceptionHandler {
 
         return new ResponseEntity<>(responseBody, HttpStatus.UNAUTHORIZED);
     }
+
     @ExceptionHandler({NotEnoughAccessLevelToData.class})
     public ResponseEntity<Object> handleNotEnoughAccessLevelToData(
             NotEnoughAccessLevelToData ex, WebRequest request) {
@@ -60,6 +73,7 @@ public class CustomExceptionHandler extends ResponseEntityExceptionHandler {
 
         return new ResponseEntity<>(responseBody, HttpStatus.FORBIDDEN);
     }
+
     @ExceptionHandler({DbException.class})
     public ResponseEntity<Object> handleDbException(
             DbException ex, WebRequest request) {
@@ -71,4 +85,6 @@ public class CustomExceptionHandler extends ResponseEntityExceptionHandler {
 
         return new ResponseEntity<>(responseBody, HttpStatus.FORBIDDEN);
     }
+
+
 }

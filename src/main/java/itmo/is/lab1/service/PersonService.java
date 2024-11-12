@@ -1,10 +1,15 @@
 package itmo.is.lab1.service;
 
+import itmo.is.lab1.DTO.model.data.LocationDTO;
 import itmo.is.lab1.DTO.model.data.PersonDTO;
+import itmo.is.lab1.dao.AddressDAO;
+import itmo.is.lab1.dao.LocationDAO;
 import itmo.is.lab1.dao.PersonDAO;
 import itmo.is.lab1.exceptionHandler.DbException;
 import itmo.is.lab1.exceptionHandler.NotEnoughAccessLevelToData;
 import itmo.is.lab1.model.auth.User;
+import itmo.is.lab1.model.data.Address;
+import itmo.is.lab1.model.data.Location;
 import itmo.is.lab1.model.data.Person;
 import itmo.is.lab1.objMapper.PersonMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,12 +24,19 @@ public class PersonService {
     private PersonDAO personDAO;
 
     @Autowired
+    private LocationDAO locationDAO;
+
+    @Autowired
     private PersonMapper personMapper;
 
-    public PersonDTO createPerson(PersonDTO personDTO, User user) {
-        personDTO.setUserId(user.getId()); // Установка userId в DTO
+    public PersonDTO createPerson(PersonDTO personDTO, User user) throws DbException {
         Person person = personMapper.toEntity(personDTO);
         person.setUser(user); // Привязываем пользователя к сущности Person
+
+        Location location = locationDAO.findById(personDTO.getLocationId())
+                .orElseThrow(() -> new DbException("Address not found with id: " + personDTO.getLocationId()));
+        person.setLocation(location);
+
         Person savedPerson = personDAO.save(person);
         return personMapper.toDTO(savedPerson);
     }
@@ -53,7 +65,12 @@ public class PersonService {
         // Обновление полей
         person.setEyeColor(personDTO.getEyeColor());
         person.setHairColor(personDTO.getHairColor());
-        person.setLocation(personDTO.getLocation());
+
+        Location location = locationDAO.findById(personDTO.getLocationId())
+                .orElseThrow(() -> new DbException("Address not found with id: " + personDTO.getLocationId()));
+        person.setLocation(location);
+
+        person.setLocation(location);
         person.setBirthday(personDTO.getBirthday());
         person.setNationality(personDTO.getNationality());
 

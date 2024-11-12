@@ -22,14 +22,14 @@ public class PersonController {
 
     @PostMapping
     @Operation(description = "Создает новую запись о человеке")
-    public ResponseEntity<PersonDTO> createPerson(@AuthenticationPrincipal User user, @Valid @RequestBody PersonDTO personDTO) {
+    public ResponseEntity<PersonDTO> createPerson(@AuthenticationPrincipal User user, @Valid @RequestBody PersonDTO personDTO) throws DbException {
         PersonDTO createdPerson = personService.createPerson(personDTO, user);
         return ResponseEntity.status(HttpStatus.CREATED).body(createdPerson);
     }
 
-    @GetMapping("/{id}")
+    @GetMapping()
     @Operation(description = "Получает информацию о человеке по id")
-    public ResponseEntity<PersonDTO> getPerson(@PathVariable Integer id, @AuthenticationPrincipal User user) throws DbException, NotEnoughAccessLevelToData {
+    public ResponseEntity<PersonDTO> getPerson(Integer id, @AuthenticationPrincipal User user) throws DbException, NotEnoughAccessLevelToData {
         PersonDTO personDTO = personService.getPersonById(id, user);
         return ResponseEntity.status(HttpStatus.OK).body(personDTO);
     }
@@ -37,13 +37,14 @@ public class PersonController {
     @PutMapping
     @Operation(description = "Обновляет информацию о человеке")
     public ResponseEntity<String> updatePerson(@AuthenticationPrincipal User user, @Valid @RequestBody PersonDTO personDTO) throws NotEnoughAccessLevelToData, DbException {
+        System.out.println(user.getUsername());
         personService.updatePerson(personDTO, user);
         return ResponseEntity.status(HttpStatus.OK).body("Person updated successfully");
     }
 
-    @DeleteMapping("/{id}")
+    @DeleteMapping()
     @Operation(description = "Удаляет запись о человеке по id")
-    public ResponseEntity<String> deletePerson(@PathVariable Integer id, @AuthenticationPrincipal User user) throws NotEnoughAccessLevelToData, DbException {
+    public ResponseEntity<String> deletePerson(Integer id, @AuthenticationPrincipal User user) throws NotEnoughAccessLevelToData, DbException {
         personService.deletePerson(id, user);
         return ResponseEntity.status(HttpStatus.OK).body("Person deleted successfully");
     }
