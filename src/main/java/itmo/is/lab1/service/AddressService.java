@@ -1,6 +1,5 @@
 package itmo.is.lab1.service;
 
-import io.jsonwebtoken.ExpiredJwtException;
 import itmo.is.lab1.DTO.model.data.AddressDTO;
 import itmo.is.lab1.dao.AddressDAO;
 import itmo.is.lab1.exceptionHandler.DbException;
@@ -9,6 +8,9 @@ import itmo.is.lab1.model.auth.User;
 import itmo.is.lab1.model.data.Address;
 import itmo.is.lab1.objMapper.AddressMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
@@ -78,5 +80,9 @@ public class AddressService {
         } else {
             throw new NotEnoughAccessLevelToData("Have no rights");
         }
+    }
+
+    public Page<AddressDTO> getNAddressesStartFromPage(Pageable pageable) {
+        return addressDAO.findAll(pageable).map(addressMapper::toDTO);
     }
 }

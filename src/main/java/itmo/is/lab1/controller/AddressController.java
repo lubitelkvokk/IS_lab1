@@ -1,11 +1,15 @@
 package itmo.is.lab1.controller;
 
+import io.swagger.v3.oas.annotations.Operation;
 import itmo.is.lab1.DTO.model.data.AddressDTO;
 import itmo.is.lab1.exceptionHandler.DbException;
 import itmo.is.lab1.exceptionHandler.NotEnoughAccessLevelToData;
 import itmo.is.lab1.service.AddressService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
@@ -24,13 +28,19 @@ public class AddressController {
         addressDTO = addressService.createAddress(addressDTO);
         return ResponseEntity.status(HttpStatus.CREATED).body(addressDTO);
     }
-
     @GetMapping
-    public ResponseEntity<AddressDTO> getAddress(Integer id) throws NotEnoughAccessLevelToData, DbException {
-        // Выполнение основной логики контроллера
+    @Operation(description = "Принимает параметры page, size для выполнения пагинации")
+    public ResponseEntity<Page<AddressDTO>> getAllAddresses(Pageable pageable) {
+        Page<AddressDTO> addresses = addressService.getNAddressesStartFromPage(pageable);
+        return ResponseEntity.ok(addresses);
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<AddressDTO> getAddress(@PathVariable Integer id) throws NotEnoughAccessLevelToData, DbException {
         AddressDTO addressDTO = addressService.getAddressById(id);
         return ResponseEntity.status(HttpStatus.OK).body(addressDTO);
     }
+
     @PutMapping
     public ResponseEntity<String> updateAddress(@Valid @RequestBody AddressDTO addressDTO) throws NotEnoughAccessLevelToData {
 
