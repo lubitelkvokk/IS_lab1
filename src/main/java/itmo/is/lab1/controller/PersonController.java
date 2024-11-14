@@ -8,6 +8,8 @@ import itmo.is.lab1.model.auth.User;
 import itmo.is.lab1.service.PersonService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -29,9 +31,17 @@ public class PersonController {
         return ResponseEntity.status(HttpStatus.CREATED).body(createdPerson);
     }
 
-    @GetMapping()
+    @GetMapping
+    @Operation(description = "Принимает параметры page, size для выполнения пагинации")
+    public ResponseEntity<Page<PersonDTO>> getAllPeople(Pageable pageable) {
+        Page<PersonDTO> people = personService.
+                getNPeopleStartFromPage(pageable);
+        return ResponseEntity.ok(people);
+    }
+
+    @GetMapping("/{id}")
     @Operation(description = "Получает информацию о человеке по id")
-    public ResponseEntity<PersonDTO> getPerson(Integer id, @AuthenticationPrincipal User user) throws DbException, NotEnoughAccessLevelToData {
+    public ResponseEntity<PersonDTO> getPerson(@PathVariable Integer id, @AuthenticationPrincipal User user) throws DbException, NotEnoughAccessLevelToData {
         PersonDTO personDTO = personService.getPersonById(id, user);
         return ResponseEntity.status(HttpStatus.OK).body(personDTO);
     }

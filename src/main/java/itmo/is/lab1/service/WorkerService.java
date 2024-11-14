@@ -14,6 +14,8 @@ import itmo.is.lab1.model.data.Person;
 import itmo.is.lab1.model.data.Worker;
 import itmo.is.lab1.objMapper.WorkerMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.Date;
@@ -110,5 +112,9 @@ public class WorkerService {
         }
 
         workerDAO.delete(worker);
+    }
+
+    public Page<WorkerDTO> getNWorkersFromPage(Pageable pageable) {
+        return workerDAO.findAll(pageable).map(workerMapper::toDTO);
     }
 }

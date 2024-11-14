@@ -13,6 +13,8 @@ import itmo.is.lab1.model.data.Location;
 import itmo.is.lab1.model.data.Person;
 import itmo.is.lab1.objMapper.PersonMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.Objects;
@@ -87,5 +89,8 @@ public class PersonService {
         }
 
         personDAO.delete(person);
+    }
+    public Page<PersonDTO> getNPeopleStartFromPage(Pageable pageable) {
+        return personDAO.findAll(pageable).map(personMapper::toDTO);
     }
 }

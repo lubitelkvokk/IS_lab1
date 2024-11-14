@@ -1,5 +1,6 @@
 package itmo.is.lab1.service;
 
+import itmo.is.lab1.DTO.model.data.LocationDTO;
 import itmo.is.lab1.DTO.model.data.OrganizationDTO;
 import itmo.is.lab1.dao.AddressDAO;
 import itmo.is.lab1.dao.OrganizationDAO;
@@ -10,6 +11,8 @@ import itmo.is.lab1.model.data.Address;
 import itmo.is.lab1.model.data.Organization;
 import itmo.is.lab1.objMapper.OrganizationMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Service;
 
@@ -90,5 +93,8 @@ public class OrganizationService {
         }
 
         organizationDAO.delete(organization);
+    }
+    public Page<OrganizationDTO> getNOrganizationStartFromPage(Pageable pageable) {
+        return organizationDAO.findAll(pageable).map(organizationMapper::toDTO);
     }
 }

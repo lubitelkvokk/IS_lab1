@@ -8,6 +8,8 @@ import itmo.is.lab1.model.auth.User;
 import itmo.is.lab1.model.data.Coordinates;
 import itmo.is.lab1.objMapper.CoordinatesMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
@@ -73,5 +75,9 @@ public class CoordinatesService {
         } else {
             throw new NotEnoughAccessLevelToData("No access rights");
         }
+    }
+
+    public Page<CoordinatesDTO> getNCoordinatesStartFromPage(Pageable pageable) {
+        return coordinatesDAO.findAll(pageable).map(coordinatesMapper::toDTO);
     }
 }

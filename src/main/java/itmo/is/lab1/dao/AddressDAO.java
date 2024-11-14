@@ -20,5 +20,4 @@ public interface AddressDAO extends JpaRepository<Address, Integer> {
     // - findAll() to list all entities
     // - deleteById(Integer id) to delete by ID
 
-    Page<Address> findAll(Pageable pageable);
 }

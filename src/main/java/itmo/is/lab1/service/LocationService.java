@@ -1,5 +1,6 @@
 package itmo.is.lab1.service;
 
+import itmo.is.lab1.DTO.model.data.CoordinatesDTO;
 import itmo.is.lab1.DTO.model.data.LocationDTO;
 import itmo.is.lab1.dao.LocationDAO;
 import itmo.is.lab1.exceptionHandler.DbException;
@@ -8,6 +9,8 @@ import itmo.is.lab1.model.auth.User;
 import itmo.is.lab1.model.data.Location;
 import itmo.is.lab1.objMapper.LocationMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.security.core.context.SecurityContextHolder;
 
@@ -35,9 +38,9 @@ public class LocationService {
                 new DbException("Location not found with id = %d".formatted(id)));
 
         // Проверка доступа
-        if (!Objects.equals(location.getUser().getId(), user.getId())) {
-            throw new NotEnoughAccessLevelToData("Attempt to access someone else's data");
-        }
+//        if (!Objects.equals(location.getUser().getId(), user.getId())) {
+//            throw new NotEnoughAccessLevelToData("Attempt to access someone else's data");
+//        }
 
         return locationMapper.toDTO(location);
     }
@@ -69,5 +72,8 @@ public class LocationService {
         }
 
         locationDAO.delete(location);
+    }
+    public Page<LocationDTO> getNLocationStartFromPage(Pageable pageable) {
+        return locationDAO.findAll(pageable).map(locationMapper::toDTO);
     }
 }

@@ -1,6 +1,7 @@
 package itmo.is.lab1.controller;
 
 import io.swagger.v3.oas.annotations.Operation;
+import itmo.is.lab1.DTO.model.data.PersonDTO;
 import itmo.is.lab1.DTO.model.data.WorkerDTO;
 import itmo.is.lab1.exceptionHandler.DbException;
 import itmo.is.lab1.exceptionHandler.NotEnoughAccessLevelToData;
@@ -8,6 +9,8 @@ import itmo.is.lab1.model.auth.User;
 import itmo.is.lab1.service.WorkerService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -30,9 +33,16 @@ public class WorkerController {
         return ResponseEntity.status(HttpStatus.CREATED).body(createdWorker);
     }
 
-    @GetMapping()
+    @GetMapping
+    @Operation(description = "Принимает параметры page, size для выполнения пагинации")
+    public ResponseEntity<Page<WorkerDTO>> getAllWorker(Pageable pageable) {
+        Page<WorkerDTO> workers = workerService.
+                getNWorkersFromPage(pageable);
+        return ResponseEntity.ok(workers);
+    }
+    @GetMapping("/{id}")
     @Operation(description = "Получает информацию о рабочем по id")
-    public ResponseEntity<WorkerDTO> getWorker(Integer id, @AuthenticationPrincipal User user) throws DbException, NotEnoughAccessLevelToData {
+    public ResponseEntity<WorkerDTO> getWorker(@PathVariable Integer id, @AuthenticationPrincipal User user) throws DbException, NotEnoughAccessLevelToData {
         WorkerDTO workerDTO = workerService.getWorkerById(id, user);
         return ResponseEntity.status(HttpStatus.OK).body(workerDTO);
     }

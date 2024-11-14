@@ -1,5 +1,6 @@
 package itmo.is.lab1.dao;
 
+import itmo.is.lab1.model.data.Address;
 import itmo.is.lab1.model.data.Location;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;

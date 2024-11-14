@@ -8,6 +8,8 @@ import itmo.is.lab1.model.auth.User;
 import itmo.is.lab1.service.OrganizationService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -24,16 +26,24 @@ public class OrganizationController {
 
     @PostMapping
     @Operation(description = "Создает новую организацию")
-    public ResponseEntity<OrganizationDTO> createOrganization( @AuthenticationPrincipal User user, @Valid @RequestBody OrganizationDTO organizationDTO) throws DbException {
+    public ResponseEntity<OrganizationDTO> createOrganization(@AuthenticationPrincipal User user, @Valid @RequestBody OrganizationDTO organizationDTO) throws DbException {
         OrganizationDTO createdOrganization = organizationService.createOrganization(organizationDTO, user);
 
         return ResponseEntity.status(HttpStatus.CREATED).body(createdOrganization);
     }
 
 
-    @GetMapping()
+    @GetMapping
+    @Operation(description = "Принимает параметры page, size для выполнения пагинации")
+    public ResponseEntity<Page<OrganizationDTO>> getAllOrganizations(Pageable pageable) {
+        Page<OrganizationDTO> organizations = organizationService.
+                getNOrganizationStartFromPage(pageable);
+        return ResponseEntity.ok(organizations);
+    }
+
+    @GetMapping("/{id}")
     @Operation(description = "Получает информацию об организации по id")
-    public ResponseEntity<OrganizationDTO> getOrganization(Integer id, @AuthenticationPrincipal User user) throws DbException, NotEnoughAccessLevelToData {
+    public ResponseEntity<OrganizationDTO> getOrganization(@PathVariable Integer id, @AuthenticationPrincipal User user) throws DbException, NotEnoughAccessLevelToData {
         OrganizationDTO organizationDTO = organizationService.getOrganizationById(id, user);
         return ResponseEntity.status(HttpStatus.OK).body(organizationDTO);
     }

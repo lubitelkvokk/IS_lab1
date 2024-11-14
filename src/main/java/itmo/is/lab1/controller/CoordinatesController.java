@@ -7,6 +7,8 @@ import itmo.is.lab1.exceptionHandler.NotEnoughAccessLevelToData;
 import itmo.is.lab1.service.CoordinatesService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
@@ -27,9 +29,17 @@ public class CoordinatesController {
         return ResponseEntity.status(HttpStatus.CREATED).body(coordinatesDTO);
     }
 
-    @GetMapping()
+    @GetMapping
+    @Operation(description = "Принимает параметры page, size для выполнения пагинации")
+    public ResponseEntity<Page<CoordinatesDTO>> getAllCoordinates(Pageable pageable) {
+        Page<CoordinatesDTO> addresses = coordinatesService.
+                getNCoordinatesStartFromPage(pageable);
+        return ResponseEntity.ok(addresses);
+    }
+
+    @GetMapping("/{id}")
     @Operation(description = "Получает координаты по id")
-    public ResponseEntity<CoordinatesDTO> getCoordinates(Integer id) throws DbException, NotEnoughAccessLevelToData {
+    public ResponseEntity<CoordinatesDTO> getCoordinates(@PathVariable Integer id) throws DbException, NotEnoughAccessLevelToData {
         CoordinatesDTO coordinatesDTO = coordinatesService.findCoordinatesById(id);
         return ResponseEntity.status(HttpStatus.OK).body(coordinatesDTO);
     }
