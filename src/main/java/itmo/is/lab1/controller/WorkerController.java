@@ -42,8 +42,8 @@ public class WorkerController {
     }
     @GetMapping("/{id}")
     @Operation(description = "Получает информацию о рабочем по id")
-    public ResponseEntity<WorkerDTO> getWorker(@PathVariable Integer id, @AuthenticationPrincipal User user) throws DbException, NotEnoughAccessLevelToData {
-        WorkerDTO workerDTO = workerService.getWorkerById(id, user);
+    public ResponseEntity<WorkerDTO> getWorker(@PathVariable Integer id) throws DbException, NotEnoughAccessLevelToData {
+        WorkerDTO workerDTO = workerService.getWorkerById(id);
         return ResponseEntity.status(HttpStatus.OK).body(workerDTO);
     }
 

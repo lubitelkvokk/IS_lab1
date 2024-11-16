@@ -42,7 +42,7 @@ public class AddressController {
     }
 
     @PutMapping
-    public ResponseEntity<String> updateAddress(@Valid @RequestBody AddressDTO addressDTO) throws NotEnoughAccessLevelToData {
+    public ResponseEntity<String> updateAddress(@Valid @RequestBody AddressDTO addressDTO) throws NotEnoughAccessLevelToData, DbException {
 
         // Выполнение основной логики контроллера
         addressService.updateAddress(addressDTO);

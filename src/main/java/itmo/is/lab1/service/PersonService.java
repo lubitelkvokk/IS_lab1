@@ -43,14 +43,9 @@ public class PersonService {
         return personMapper.toDTO(savedPerson);
     }
 
-    public PersonDTO getPersonById(Integer id, User user) throws DbException, NotEnoughAccessLevelToData {
+    public PersonDTO getPersonById(Integer id) throws DbException, NotEnoughAccessLevelToData {
         Person person = personDAO.findById(id).orElseThrow(() ->
                 new DbException("Person not found with id = %d".formatted(id)));
-
-        // Проверка прав доступа
-        if (!Objects.equals(person.getUser().getId(), user.getId())) {
-            throw new NotEnoughAccessLevelToData("Attempt to access someone else's data");
-        }
 
         return personMapper.toDTO(person);
     }

@@ -24,7 +24,7 @@ public class WorkerDTO {
     @Schema(description = "Координаты рабочего. Поле не может быть null", required = true)
     private Integer coordinatesId; // Поле не может быть null
 
-    @NotNull(message = "Дата создания не может быть null")
+//    @NotNull(message = "Дата создания не может быть null")
     @Schema(description = "Дата создания рабочего. Поле не может быть null, значение должно генерироваться автоматически", required = true, example = "2023-11-04T15:30:00Z")
     private java.util.Date creationDate; // Поле не может быть null, Значение этого поля должно генерироваться автоматически
 

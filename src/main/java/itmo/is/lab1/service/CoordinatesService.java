@@ -38,9 +38,6 @@ public class CoordinatesService {
         if (authentication.getPrincipal() instanceof User customUser) {
             Coordinates coordinates = coordinatesDAO.findById(id).orElseThrow(() ->
                     new DbException("No coordinates found with id = %d".formatted(id)));
-            if (!Objects.equals(coordinates.getUser().getId(), customUser.getId())) {
-                throw new NotEnoughAccessLevelToData("Attempt to access someone else's data");
-            }
             return coordinatesMapper.toDTO(coordinates);
         } else {
             throw new NotEnoughAccessLevelToData("No access rights");

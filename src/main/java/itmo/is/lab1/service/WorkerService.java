@@ -57,14 +57,9 @@ public class WorkerService {
         return workerMapper.toDTO(savedWorker);
     }
 
-    public WorkerDTO getWorkerById(Integer id, User user) throws DbException, NotEnoughAccessLevelToData {
+    public WorkerDTO getWorkerById(Integer id) throws DbException, NotEnoughAccessLevelToData {
         Worker worker = workerDAO.findById(id).orElseThrow(() ->
                 new DbException("Worker not found with id = %d".formatted(id)));
-
-        // Проверка прав доступа
-        if (!Objects.equals(worker.getUser().getId(), user.getId())) {
-            throw new NotEnoughAccessLevelToData("Attempt to access someone else's data");
-        }
 
         return workerMapper.toDTO(worker);
     }

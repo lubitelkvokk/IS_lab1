@@ -41,8 +41,8 @@ public class PersonController {
 
     @GetMapping("/{id}")
     @Operation(description = "Получает информацию о человеке по id")
-    public ResponseEntity<PersonDTO> getPerson(@PathVariable Integer id, @AuthenticationPrincipal User user) throws DbException, NotEnoughAccessLevelToData {
-        PersonDTO personDTO = personService.getPersonById(id, user);
+    public ResponseEntity<PersonDTO> getPerson(@PathVariable Integer id) throws DbException, NotEnoughAccessLevelToData {
+        PersonDTO personDTO = personService.getPersonById(id);
         return ResponseEntity.status(HttpStatus.OK).body(personDTO);
     }
 

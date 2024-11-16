@@ -43,7 +43,7 @@ public class CustomExceptionHandler extends ResponseEntityExceptionHandler {
                 .map(DefaultMessageSourceResolvable::getDefaultMessage)
                 .collect(Collectors.toList());
 
-        responseBody.put("errors", errors);
+        responseBody.put("error", errors);
 
         return new ResponseEntity<>(responseBody, headers, HttpStatus.BAD_REQUEST);
     }

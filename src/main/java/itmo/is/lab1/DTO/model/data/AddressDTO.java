@@ -1,6 +1,7 @@
 package itmo.is.lab1.DTO.model.data;
 
 import io.swagger.v3.oas.annotations.media.Schema;
+import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 import lombok.Data;
@@ -16,7 +17,7 @@ public class AddressDTO {
     @Schema(description = "Название улицы", requiredMode = Schema.RequiredMode.REQUIRED, example = "Koroleva 21")
     private String street;//Длина строки не должна быть больше 196, Поле может быть null
 
-    @NotNull(message = "zipCode of address cannot be null")
+    @NotBlank(message = "zipCode of address cannot be blank")
     @Schema(description = "Почтовый индекс", requiredMode = Schema.RequiredMode.REQUIRED, example = "468320")
     private String zipCode;//Поле может быть null
 }

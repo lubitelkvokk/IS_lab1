@@ -45,14 +45,9 @@ public class OrganizationService {
     }
 
 
-    public OrganizationDTO getOrganizationById(Integer id, User user) throws DbException, NotEnoughAccessLevelToData {
+    public OrganizationDTO getOrganizationById(Integer id) throws DbException, NotEnoughAccessLevelToData {
         Organization organization = organizationDAO.findById(id).orElseThrow(() ->
                 new DbException("Organization not found with id = %d".formatted(id)));
-
-        // Проверка доступа
-        if (!Objects.equals(organization.getUser().getId(), user.getId())) {
-            throw new NotEnoughAccessLevelToData("Attempt to access someone else's data");
-        }
 
         return organizationMapper.toDTO(organization);
     }

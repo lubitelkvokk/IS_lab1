@@ -49,11 +49,11 @@ public class AddressService {
 
     }
 
-    public void updateAddress(AddressDTO addressDTO) throws NotEnoughAccessLevelToData {
+    public void updateAddress(AddressDTO addressDTO) throws NotEnoughAccessLevelToData, DbException {
 
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         if (authentication.getPrincipal() instanceof User customUser) {
-            Address address = addressDAO.findById(addressDTO.getId()).orElseThrow();
+            Address address = addressDAO.findById(addressDTO.getId()).orElseThrow(() -> new DbException("Such id not found in addresses table"));
             if (!Objects.equals(address.getUser().getId(), customUser.getId())) {
                 throw new NotEnoughAccessLevelToData(
                         "An attempt to change someone else's data");

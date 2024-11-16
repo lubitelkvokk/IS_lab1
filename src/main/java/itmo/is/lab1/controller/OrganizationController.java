@@ -43,8 +43,8 @@ public class OrganizationController {
 
     @GetMapping("/{id}")
     @Operation(description = "Получает информацию об организации по id")
-    public ResponseEntity<OrganizationDTO> getOrganization(@PathVariable Integer id, @AuthenticationPrincipal User user) throws DbException, NotEnoughAccessLevelToData {
-        OrganizationDTO organizationDTO = organizationService.getOrganizationById(id, user);
+    public ResponseEntity<OrganizationDTO> getOrganization(@PathVariable Integer id) throws DbException, NotEnoughAccessLevelToData {
+        OrganizationDTO organizationDTO = organizationService.getOrganizationById(id);
         return ResponseEntity.status(HttpStatus.OK).body(organizationDTO);
     }
 
