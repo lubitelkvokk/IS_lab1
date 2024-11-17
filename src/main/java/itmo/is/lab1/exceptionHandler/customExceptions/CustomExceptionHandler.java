@@ -4,6 +4,8 @@ import java.util.*;
 import java.util.stream.Collectors;
 
 import io.jsonwebtoken.ExpiredJwtException;
+import io.jsonwebtoken.MalformedJwtException;
+import io.jsonwebtoken.security.SignatureException;
 import itmo.is.lab1.exceptionHandler.DbException;
 import itmo.is.lab1.exceptionHandler.NotEnoughAccessLevelToData;
 import org.springframework.context.support.DefaultMessageSourceResolvable;
@@ -48,18 +50,18 @@ public class CustomExceptionHandler extends ResponseEntityExceptionHandler {
         return new ResponseEntity<>(responseBody, headers, HttpStatus.BAD_REQUEST);
     }
 
-    // Обработка истекшего токена JWT
-    @ExceptionHandler(ExpiredJwtException.class)
-    public ResponseEntity<Object> handleExpiredJwtException(ExpiredJwtException ex, WebRequest request) {
+    @ExceptionHandler({ExpiredJwtException.class, MalformedJwtException.class, SignatureException.class})
+    public ResponseEntity<Object> handleJwtExceptions(RuntimeException ex) {
+        Map<String, Object> response = new LinkedHashMap<>();
+        response.put("timestamp", new Date());
+        response.put("error", ex instanceof ExpiredJwtException ? "Token is expired" : "Incorrect token");
+        response.put("message", ex.getMessage());
 
-        Map<String, Object> responseBody = new LinkedHashMap<>();
-        responseBody.put("timestamp", new Date());
-        responseBody.put("status", HttpStatus.UNAUTHORIZED.value());
-        responseBody.put("error", "JWT token has expired");
-        responseBody.put("message", ex.getMessage());
-
-        return new ResponseEntity<>(responseBody, HttpStatus.UNAUTHORIZED);
+        HttpStatus status = ex instanceof ExpiredJwtException ? HttpStatus.UNAUTHORIZED : HttpStatus.BAD_REQUEST;
+        return new ResponseEntity<>(response, status);
     }
+
+
 
     @ExceptionHandler({NotEnoughAccessLevelToData.class})
     public ResponseEntity<Object> handleNotEnoughAccessLevelToData(

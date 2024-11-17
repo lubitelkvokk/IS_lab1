@@ -30,8 +30,8 @@ public class AddressController {
     }
     @GetMapping
     @Operation(description = "Принимает параметры page, size для выполнения пагинации")
-    public ResponseEntity<Page<AddressDTO>> getAllAddresses(Pageable pageable) {
-        Page<AddressDTO> addresses = addressService.getNAddressesStartFromPage(pageable);
+    public ResponseEntity<Page<AddressDTO>> getAllAddresses(Pageable pageable, @RequestParam(required = false) String streetFilter) {
+        Page<AddressDTO> addresses = addressService.getNAddressesStartFromPage(pageable, streetFilter);
         return ResponseEntity.ok(addresses);
     }
 
@@ -50,9 +50,9 @@ public class AddressController {
         return ResponseEntity.status(HttpStatus.OK).body("successfull updating of address");
     }
 
-    @DeleteMapping
-    public ResponseEntity<String> deleteAddress(AddressDTO addressDTO) throws NotEnoughAccessLevelToData {
-        addressService.deleteAddress(addressDTO);
+    @DeleteMapping("/{id}")
+    public ResponseEntity<String> deleteAddress(@PathVariable Integer id) throws NotEnoughAccessLevelToData {
+        addressService.deleteAddress(id);
 
         return ResponseEntity.status(HttpStatus.OK).body("successfull deleting");
     }

@@ -14,11 +14,9 @@ public class UserMapper implements GenericMapper<User, UserDTO> {
         if (user == null) {
             return null;
         }
-        return new UserDTO(
-                user.getUsername(),
-                user.getPassword(),
-                user.getRole()
-        );
+        return UserDTO.builder()
+                .username(user.getUsername())
+                .role(user.getRole()).build();
     }
 
     @Override

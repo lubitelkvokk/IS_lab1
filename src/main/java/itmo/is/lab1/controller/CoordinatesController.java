@@ -51,9 +51,9 @@ public class CoordinatesController {
         return ResponseEntity.status(HttpStatus.OK).body("Successful updating of coordinates");
     }
 
-    @DeleteMapping()
+    @DeleteMapping("/{id}")
     @Operation(description = "Удаляет координаты по id")
-    public ResponseEntity<String> deleteCoordinates(Integer id) throws NotEnoughAccessLevelToData, DbException {
+    public ResponseEntity<String> deleteCoordinates(@PathVariable Integer id) throws NotEnoughAccessLevelToData, DbException {
         coordinatesService.deleteCoordinatesById(id);
         return ResponseEntity.status(HttpStatus.OK).body("Successful deleting");
     }

@@ -67,11 +67,11 @@ public class AddressService {
 
     }
 
-    public void deleteAddress(AddressDTO addressDTO) throws NotEnoughAccessLevelToData {
+    public void deleteAddress(Integer id) throws NotEnoughAccessLevelToData {
 
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         if (authentication.getPrincipal() instanceof User customUser) {
-            Address address = addressDAO.findById(addressDTO.getId()).orElseThrow();
+            Address address = addressDAO.findById(id).orElseThrow();
             if (!Objects.equals(address.getUser().getId(), customUser.getId())) {
                 throw new NotEnoughAccessLevelToData(
                         "An attempt to change someone else's data");
@@ -82,7 +82,9 @@ public class AddressService {
         }
     }
 
-    public Page<AddressDTO> getNAddressesStartFromPage(Pageable pageable) {
-        return addressDAO.findAll(pageable).map(addressMapper::toDTO);
+    public Page<AddressDTO> getNAddressesStartFromPage(Pageable pageable, String searchStreet) {
+        if (searchStreet.isBlank())
+            return addressDAO.findAll(pageable).map(addressMapper::toDTO);
+        return addressDAO.findAllByStreet(pageable, searchStreet).map(addressMapper::toDTO);
     }
 }
