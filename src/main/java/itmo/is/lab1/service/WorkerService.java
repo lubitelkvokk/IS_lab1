@@ -13,6 +13,7 @@ import itmo.is.lab1.model.data.Organization;
 import itmo.is.lab1.model.data.Person;
 import itmo.is.lab1.model.data.Worker;
 import itmo.is.lab1.objMapper.WorkerMapper;
+import itmo.is.lab1.permission.PermissionChecker;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -35,6 +36,8 @@ public class WorkerService {
 
     @Autowired
     private WorkerMapper workerMapper;
+    @Autowired
+    private PermissionChecker permissionChecker;
 
     public WorkerDTO createWorker(WorkerDTO workerDTO, User user) throws DbException {
         Worker worker = workerMapper.toEntity(workerDTO);
@@ -69,10 +72,7 @@ public class WorkerService {
                 new DbException("Worker not found with id = %d".formatted(workerDTO.getId())));
 
         // Проверка прав доступа
-        if (!Objects.equals(worker.getUser().getId(), user.getId())) {
-            throw new NotEnoughAccessLevelToData("Attempt to modify someone else's data");
-        }
-
+        permissionChecker.checkRUDPermission(worker);
         // Обновление полей
         worker.setName(workerDTO.getName());
 
@@ -102,9 +102,7 @@ public class WorkerService {
                 new DbException("Worker not found with id = %d".formatted(id)));
 
         // Проверка прав доступа
-        if (!Objects.equals(worker.getUser().getId(), user.getId())) {
-            throw new NotEnoughAccessLevelToData("Attempt to delete someone else's data");
-        }
+        permissionChecker.checkRUDPermission(worker);
 
         workerDAO.delete(worker);
     }

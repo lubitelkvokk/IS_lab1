@@ -12,6 +12,7 @@ import itmo.is.lab1.model.data.Address;
 import itmo.is.lab1.model.data.Location;
 import itmo.is.lab1.model.data.Person;
 import itmo.is.lab1.objMapper.PersonMapper;
+import itmo.is.lab1.permission.PermissionChecker;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -30,6 +31,8 @@ public class PersonService {
 
     @Autowired
     private PersonMapper personMapper;
+    @Autowired
+    private PermissionChecker permissionChecker;
 
     public PersonDTO createPerson(PersonDTO personDTO, User user) throws DbException {
         Person person = personMapper.toEntity(personDTO);
@@ -55,10 +58,7 @@ public class PersonService {
                 new DbException("Person not found with id = %d".formatted(personDTO.getId())));
 
         // Проверка прав доступа
-        if (!Objects.equals(person.getUser().getId(), user.getId())) {
-            throw new NotEnoughAccessLevelToData("Attempt to modify someone else's data");
-        }
-
+        permissionChecker.checkRUDPermission(person);
         // Обновление полей
         person.setEyeColor(personDTO.getEyeColor());
         person.setHairColor(personDTO.getHairColor());
@@ -79,9 +79,7 @@ public class PersonService {
                 new DbException("Person not found with id = %d".formatted(id)));
 
         // Проверка прав доступа
-        if (!Objects.equals(person.getUser().getId(), user.getId())) {
-            throw new NotEnoughAccessLevelToData("Attempt to delete someone else's data");
-        }
+        permissionChecker.checkRUDPermission(person);
 
         personDAO.delete(person);
     }

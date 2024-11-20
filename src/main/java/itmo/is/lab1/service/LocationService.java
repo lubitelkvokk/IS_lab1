@@ -8,6 +8,7 @@ import itmo.is.lab1.exceptionHandler.NotEnoughAccessLevelToData;
 import itmo.is.lab1.model.auth.User;
 import itmo.is.lab1.model.data.Location;
 import itmo.is.lab1.objMapper.LocationMapper;
+import itmo.is.lab1.permission.PermissionChecker;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -25,6 +26,9 @@ public class LocationService {
     @Autowired
     private LocationMapper locationMapper;
 
+    @Autowired
+    private PermissionChecker permissionChecker;
+
     public LocationDTO createLocation(LocationDTO locationDTO, User user) {
         locationDTO.setUserId(user.getId()); // Установка userId
         Location location = locationMapper.toEntity(locationDTO);
@@ -37,11 +41,6 @@ public class LocationService {
         Location location = locationDAO.findById(id).orElseThrow(() ->
                 new DbException("Location not found with id = %d".formatted(id)));
 
-        // Проверка доступа
-//        if (!Objects.equals(location.getUser().getId(), user.getId())) {
-//            throw new NotEnoughAccessLevelToData("Attempt to access someone else's data");
-//        }
-
         return locationMapper.toDTO(location);
     }
 
@@ -50,9 +49,7 @@ public class LocationService {
                 new DbException("Location not found with id = %d".formatted(locationDTO.getId())));
 
         // Проверка доступа
-        if (!Objects.equals(location.getUser().getId(), user.getId())) {
-            throw new NotEnoughAccessLevelToData("Attempt to modify someone else's data");
-        }
+        permissionChecker.checkRUDPermission(location);
 
         // Обновление полей
         location.setX(locationDTO.getX());
@@ -66,11 +63,7 @@ public class LocationService {
         Location location = locationDAO.findById(id).orElseThrow(() ->
                 new DbException("Location not found with id = %d".formatted(id)));
 
-        // Проверка доступа
-        if (!Objects.equals(location.getUser().getId(), user.getId())) {
-            throw new NotEnoughAccessLevelToData("Attempt to delete someone else's data");
-        }
-
+        permissionChecker.checkRUDPermission(location);
         locationDAO.delete(location);
     }
     public Page<LocationDTO> getNLocationStartFromPage(Pageable pageable) {

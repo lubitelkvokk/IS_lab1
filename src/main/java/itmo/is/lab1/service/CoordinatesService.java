@@ -7,6 +7,7 @@ import itmo.is.lab1.exceptionHandler.NotEnoughAccessLevelToData;
 import itmo.is.lab1.model.auth.User;
 import itmo.is.lab1.model.data.Coordinates;
 import itmo.is.lab1.objMapper.CoordinatesMapper;
+import itmo.is.lab1.permission.PermissionChecker;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -25,6 +26,9 @@ public class CoordinatesService {
     @Autowired
     private CoordinatesMapper coordinatesMapper;
 
+    @Autowired
+    private PermissionChecker permissionChecker;
+
     public CoordinatesDTO createCoordinates(CoordinatesDTO coordinatesDTO) {
         Coordinates coordinates = coordinatesMapper.toEntity(coordinatesDTO);
 
@@ -34,30 +38,21 @@ public class CoordinatesService {
     }
 
     public CoordinatesDTO findCoordinatesById(Integer id) throws DbException, NotEnoughAccessLevelToData {
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        if (authentication.getPrincipal() instanceof User customUser) {
-            Coordinates coordinates = coordinatesDAO.findById(id).orElseThrow(() ->
-                    new DbException("No coordinates found with id = %d".formatted(id)));
-            return coordinatesMapper.toDTO(coordinates);
-        } else {
-            throw new NotEnoughAccessLevelToData("No access rights");
-        }
+        Coordinates coordinates = coordinatesDAO.findById(id).orElseThrow(() ->
+                new DbException("No coordinates found with id = %d".formatted(id)));
+        return coordinatesMapper.toDTO(coordinates);
     }
 
     public void updateCoordinates(CoordinatesDTO coordinatesDTO) throws DbException, NotEnoughAccessLevelToData {
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        if (authentication.getPrincipal() instanceof User customUser) {
-            Coordinates coordinates = coordinatesDAO.findById(coordinatesDTO.getId()).orElseThrow(() ->
-                    new DbException("No coordinates found with id = %d".formatted(coordinatesDTO.getId())));
-            if (!Objects.equals(coordinates.getUser().getId(), customUser.getId())) {
-                throw new NotEnoughAccessLevelToData("Attempt to modify someone else's data");
-            }
-            coordinates.setX(coordinatesDTO.getX());
-            coordinates.setY(coordinatesDTO.getY());
-            coordinatesDAO.save(coordinates);
-        } else {
-            throw new NotEnoughAccessLevelToData("No access rights");
-        }
+        Coordinates coordinates = coordinatesDAO.findById(coordinatesDTO.getId()).orElseThrow(() ->
+                new DbException("No coordinates found with id = %d".formatted(coordinatesDTO.getId())));
+
+        permissionChecker.checkRUDPermission(coordinates);
+
+        coordinates.setX(coordinatesDTO.getX());
+        coordinates.setY(coordinatesDTO.getY());
+        coordinatesDAO.save(coordinates);
+
     }
 
     public void deleteCoordinatesById(Integer id) throws DbException, NotEnoughAccessLevelToData {
@@ -65,9 +60,7 @@ public class CoordinatesService {
         if (authentication.getPrincipal() instanceof User customUser) {
             Coordinates coordinates = coordinatesDAO.findById(id).orElseThrow(() ->
                     new DbException("No coordinates found with id = %d".formatted(id)));
-            if (!Objects.equals(coordinates.getUser().getId(), customUser.getId())) {
-                throw new NotEnoughAccessLevelToData("Attempt to delete someone else's data");
-            }
+            permissionChecker.checkRUDPermission(coordinates);
             coordinatesDAO.delete(coordinates);
         } else {
             throw new NotEnoughAccessLevelToData("No access rights");

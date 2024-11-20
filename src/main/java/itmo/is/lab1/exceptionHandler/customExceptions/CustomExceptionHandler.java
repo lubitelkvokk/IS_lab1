@@ -8,7 +8,9 @@ import io.jsonwebtoken.MalformedJwtException;
 import io.jsonwebtoken.security.SignatureException;
 import itmo.is.lab1.exceptionHandler.DbException;
 import itmo.is.lab1.exceptionHandler.NotEnoughAccessLevelToData;
+import org.postgresql.util.PSQLException;
 import org.springframework.context.support.DefaultMessageSourceResolvable;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.*;
 import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
@@ -62,7 +64,6 @@ public class CustomExceptionHandler extends ResponseEntityExceptionHandler {
     }
 
 
-
     @ExceptionHandler({NotEnoughAccessLevelToData.class})
     public ResponseEntity<Object> handleNotEnoughAccessLevelToData(
             NotEnoughAccessLevelToData ex, WebRequest request) {
@@ -88,5 +89,24 @@ public class CustomExceptionHandler extends ResponseEntityExceptionHandler {
         return new ResponseEntity<>(responseBody, HttpStatus.FORBIDDEN);
     }
 
+    @ExceptionHandler(DataIntegrityViolationException.class)
+    public ResponseEntity<String> handleDataIntegrityViolation(DataIntegrityViolationException ex) {
+        Throwable rootCause = getRootCause(ex);
+        if (rootCause instanceof PSQLException) {
+            String message = rootCause.getMessage();
+            if (message.contains("violates foreign key constraint")) {
+                return ResponseEntity.badRequest().body("Невозможно удалить запись: она используется в других объектах.");
+            }
+        }
+        return ResponseEntity.internalServerError().body("Ошибка базы данных.");
+    }
+
+    private Throwable getRootCause(Throwable throwable) {
+        Throwable rootCause = throwable;
+        while (rootCause.getCause() != null && rootCause != rootCause.getCause()) {
+            rootCause = rootCause.getCause();
+        }
+        return rootCause;
+    }
 
 }

@@ -12,7 +12,7 @@ import java.time.ZonedDateTime;
 @Data
 @NoArgsConstructor
 @Table(name = "person")
-public class Person {
+public class Person implements Creation{
 
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)

@@ -7,6 +7,7 @@ import itmo.is.lab1.exceptionHandler.NotEnoughAccessLevelToData;
 import itmo.is.lab1.model.auth.User;
 import itmo.is.lab1.model.data.Address;
 import itmo.is.lab1.objMapper.AddressMapper;
+import itmo.is.lab1.permission.PermissionChecker;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -25,6 +26,9 @@ public class AddressService {
     @Autowired
     private AddressMapper addressMapper;
 
+    @Autowired
+    private PermissionChecker permissionChecker;
+
     public AddressDTO createAddress(AddressDTO addressDTO) {
         Address address = addressMapper.toEntity(addressDTO);
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
@@ -33,53 +37,23 @@ public class AddressService {
     }
 
     public AddressDTO getAddressById(Integer id) throws NotEnoughAccessLevelToData, DbException {
-
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        if (authentication.getPrincipal() instanceof User customUser) {
-            Address address = addressDAO.findById(id).orElseThrow(() ->
-                    new DbException("Have no address with id = %d".formatted(id)));
-//            if (!Objects.equals(address.getUser().getId(), customUser.getId())) {
-//                throw new NotEnoughAccessLevelToData(
-//                        "An attempt to change someone else's data");
-//            }
-            return addressMapper.toDTO(address);
-        } else {
-            throw new NotEnoughAccessLevelToData("Have no rights");
-        }
-
+        Address address = addressDAO.findById(id).orElseThrow(() ->
+                new DbException("Have no address with id = %d".formatted(id)));
+        return addressMapper.toDTO(address);
     }
 
     public void updateAddress(AddressDTO addressDTO) throws NotEnoughAccessLevelToData, DbException {
-
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        if (authentication.getPrincipal() instanceof User customUser) {
-            Address address = addressDAO.findById(addressDTO.getId()).orElseThrow(() -> new DbException("Such id not found in addresses table"));
-            if (!Objects.equals(address.getUser().getId(), customUser.getId())) {
-                throw new NotEnoughAccessLevelToData(
-                        "An attempt to change someone else's data");
-            }
-            address.setStreet(addressDTO.getStreet());
-            address.setZipCode(addressDTO.getZipCode());
-            addressDAO.save(address);
-        } else {
-            throw new NotEnoughAccessLevelToData("Have no rights");
-        }
-
+        Address address = addressDAO.findById(addressDTO.getId()).orElseThrow(() -> new DbException("Such id not found in addresses table"));
+        permissionChecker.checkRUDPermission(address);
+        address.setStreet(addressDTO.getStreet());
+        address.setZipCode(addressDTO.getZipCode());
+        addressDAO.save(address);
     }
 
     public void deleteAddress(Integer id) throws NotEnoughAccessLevelToData {
-
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        if (authentication.getPrincipal() instanceof User customUser) {
-            Address address = addressDAO.findById(id).orElseThrow();
-            if (!Objects.equals(address.getUser().getId(), customUser.getId())) {
-                throw new NotEnoughAccessLevelToData(
-                        "An attempt to change someone else's data");
-            }
-            addressDAO.delete(address);
-        } else {
-            throw new NotEnoughAccessLevelToData("Have no rights");
-        }
+        Address address = addressDAO.findById(id).orElseThrow();
+        permissionChecker.checkRUDPermission(address);
+        addressDAO.delete(address);
     }
 
     public Page<AddressDTO> getNAddressesStartFromPage(Pageable pageable, String searchStreet) {

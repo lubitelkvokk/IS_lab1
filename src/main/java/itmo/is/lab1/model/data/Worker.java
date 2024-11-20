@@ -15,7 +15,7 @@ import java.util.Date;
 @Data
 @NoArgsConstructor
 @Table(name = "worker", uniqueConstraints = {@UniqueConstraint(columnNames = {"id"})})
-public class Worker {
+public class Worker implements Creation{
 
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)

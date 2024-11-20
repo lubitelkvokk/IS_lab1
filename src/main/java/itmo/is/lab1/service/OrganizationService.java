@@ -10,6 +10,7 @@ import itmo.is.lab1.model.auth.User;
 import itmo.is.lab1.model.data.Address;
 import itmo.is.lab1.model.data.Organization;
 import itmo.is.lab1.objMapper.OrganizationMapper;
+import itmo.is.lab1.permission.PermissionChecker;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -30,6 +31,8 @@ public class OrganizationService {
 
     @Autowired
     private OrganizationMapper organizationMapper;
+    @Autowired
+    private PermissionChecker permissionChecker;
 
     public OrganizationDTO createOrganization(OrganizationDTO organizationDTO, User user) throws DbException {
         Organization organization = organizationMapper.toEntity(organizationDTO);
@@ -58,10 +61,7 @@ public class OrganizationService {
                 new DbException("Organization not found with id = %d".formatted(organizationDTO.getId())));
 
         // Проверка доступа
-        if (!Objects.equals(organization.getUser().getId(), user.getId())) {
-            throw new NotEnoughAccessLevelToData("Attempt to modify someone else's data");
-        }
-
+        permissionChecker.checkRUDPermission(organization);
         // Обновление полей
         organization.setFullName(organizationDTO.getFullName());
         organization.setAnnualTurnover(organizationDTO.getAnnualTurnover());
@@ -83,10 +83,7 @@ public class OrganizationService {
                 new DbException("Organization not found with id = %d".formatted(id)));
 
         // Проверка доступа
-        if (!Objects.equals(organization.getUser().getId(), user.getId())) {
-            throw new NotEnoughAccessLevelToData("Attempt to delete someone else's data");
-        }
-
+        permissionChecker.checkRUDPermission(organization);
         organizationDAO.delete(organization);
     }
     public Page<OrganizationDTO> getNOrganizationStartFromPage(Pageable pageable) {
