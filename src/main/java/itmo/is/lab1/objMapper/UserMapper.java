@@ -15,6 +15,7 @@ public class UserMapper implements GenericMapper<User, UserDTO> {
             return null;
         }
         return UserDTO.builder()
+                .id(user.getId())
                 .username(user.getUsername())
                 .role(user.getRole()).build();
     }
@@ -25,6 +26,7 @@ public class UserMapper implements GenericMapper<User, UserDTO> {
             return null;
         }
         return User.builder()
+                .id(userDTO.getId())
                 .username(userDTO.getUsername())
                 .password(userDTO.getPassword())
                 .role(userDTO.getRole())
