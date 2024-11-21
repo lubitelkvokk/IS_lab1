@@ -54,9 +54,9 @@ public class PersonController {
         return ResponseEntity.status(HttpStatus.OK).body("Person updated successfully");
     }
 
-    @DeleteMapping()
+    @DeleteMapping("/{id}")
     @Operation(description = "Удаляет запись о человеке по id")
-    public ResponseEntity<String> deletePerson(Integer id, @AuthenticationPrincipal User user) throws NotEnoughAccessLevelToData, DbException {
+    public ResponseEntity<String> deletePerson(@PathVariable Integer id, @AuthenticationPrincipal User user) throws NotEnoughAccessLevelToData, DbException {
         personService.deletePerson(id, user);
         return ResponseEntity.status(HttpStatus.OK).body("Person deleted successfully");
     }

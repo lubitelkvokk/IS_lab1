@@ -57,8 +57,8 @@ public class AddressService {
     }
 
     public Page<AddressDTO> getNAddressesStartFromPage(Pageable pageable, String searchStreet) {
-        if (searchStreet.isBlank())
+        if (searchStreet == null || searchStreet.isBlank() || searchStreet.isEmpty())
             return addressDAO.findAll(pageable).map(addressMapper::toDTO);
-        return addressDAO.findAllByStreet(pageable, searchStreet).map(addressMapper::toDTO);
+        return addressDAO.findAllByStreet(pageable, searchStreet.trim()).map(addressMapper::toDTO);
     }
 }

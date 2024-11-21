@@ -55,7 +55,7 @@ public class OrganizationService {
         return organizationMapper.toDTO(organization);
     }
 
-    public void updateOrganization(OrganizationDTO organizationDTO, User user) throws NotEnoughAccessLevelToData, DbException {
+    public void updateOrganization(OrganizationDTO organizationDTO) throws NotEnoughAccessLevelToData, DbException {
         if (organizationDTO.getId() == null) throw new DbException("Id of updated organiation mustn't be null");
         Organization organization = organizationDAO.findById(organizationDTO.getId()).orElseThrow(() ->
                 new DbException("Organization not found with id = %d".formatted(organizationDTO.getId())));
@@ -71,8 +71,8 @@ public class OrganizationService {
 
         // Проверяем наличие Address и загружаем его из базы данных
         if (organizationDTO.getAddressId() != null) {
-            Address existingAddress = addressDAO.findById(organization.getOfficialAddress().getId())
-                    .orElseThrow(() -> new DbException("Address not found with id: " + organization.getOfficialAddress().getId()));
+            Address existingAddress = addressDAO.findById(organizationDTO.getAddressId())
+                    .orElseThrow(() -> new DbException("Address not found with id: " + organizationDTO.getAddressId()));
             organization.setOfficialAddress(existingAddress);
         }
         organizationDAO.save(organization);

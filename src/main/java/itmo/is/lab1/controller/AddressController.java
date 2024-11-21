@@ -31,6 +31,7 @@ public class AddressController {
     @GetMapping
     @Operation(description = "Принимает параметры page, size для выполнения пагинации")
     public ResponseEntity<Page<AddressDTO>> getAllAddresses(Pageable pageable, @RequestParam(required = false) String streetFilter) {
+        System.out.println(streetFilter);
         Page<AddressDTO> addresses = addressService.getNAddressesStartFromPage(pageable, streetFilter);
         return ResponseEntity.ok(addresses);
     }

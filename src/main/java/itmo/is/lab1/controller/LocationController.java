@@ -53,9 +53,9 @@ public class LocationController {
         return ResponseEntity.status(HttpStatus.OK).body("Location updated successfully");
     }
 
-    @DeleteMapping()
+    @DeleteMapping("/{id}")
     @Operation(description = "Удаляет местоположение по id")
-    public ResponseEntity<String> deleteLocation(Integer id, @AuthenticationPrincipal User user) throws NotEnoughAccessLevelToData, DbException {
+    public ResponseEntity<String> deleteLocation(@PathVariable Integer id, @AuthenticationPrincipal User user) throws NotEnoughAccessLevelToData, DbException {
         locationService.deleteLocation(id, user);
         return ResponseEntity.status(HttpStatus.OK).body("Location deleted successfully");
     }

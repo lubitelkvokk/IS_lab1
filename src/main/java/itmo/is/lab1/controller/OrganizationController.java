@@ -50,14 +50,14 @@ public class OrganizationController {
 
     @PutMapping
     @Operation(description = "Обновляет информацию об организации")
-    public ResponseEntity<String> updateOrganization(@AuthenticationPrincipal User user, @Valid @RequestBody OrganizationDTO organizationDTO) throws NotEnoughAccessLevelToData, DbException {
-        organizationService.updateOrganization(organizationDTO, user);
+    public ResponseEntity<String> updateOrganization(@Valid @RequestBody OrganizationDTO organizationDTO) throws NotEnoughAccessLevelToData, DbException {
+        organizationService.updateOrganization(organizationDTO);
         return ResponseEntity.status(HttpStatus.OK).body("Organization updated successfully");
     }
 
-    @DeleteMapping()
+    @DeleteMapping("/{id}")
     @Operation(description = "Удаляет организацию по id")
-    public ResponseEntity<String> deleteOrganization(Integer id, @AuthenticationPrincipal User user) throws NotEnoughAccessLevelToData, DbException {
+    public ResponseEntity<String> deleteOrganization(@PathVariable Integer id, @AuthenticationPrincipal User user) throws NotEnoughAccessLevelToData, DbException {
         organizationService.deleteOrganization(id, user);
         return ResponseEntity.status(HttpStatus.OK).body("Organization deleted successfully");
     }
