@@ -25,6 +25,7 @@ public class CoordinatesController {
     @PostMapping
     @Operation(description = "Добавляет координаты")
     public ResponseEntity<CoordinatesDTO> createCoordinates(@Valid @RequestBody CoordinatesDTO coordinatesDTO) {
+        System.out.println(coordinatesDTO);
         coordinatesDTO = coordinatesService.createCoordinates(coordinatesDTO);
         return ResponseEntity.status(HttpStatus.CREATED).body(coordinatesDTO);
     }

@@ -34,6 +34,7 @@ public class CoordinatesService {
 
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         coordinates.setUser((User) authentication.getPrincipal());
+        coordinates.setId(null);
         return coordinatesMapper.toDTO(coordinatesDAO.save(coordinates));
     }
 

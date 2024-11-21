@@ -54,9 +54,9 @@ public class WorkerController {
         return ResponseEntity.status(HttpStatus.OK).body("Worker updated successfully");
     }
 
-    @DeleteMapping()
+    @DeleteMapping("/{id}")
     @Operation(description = "Удаляет запись о рабочем по id")
-    public ResponseEntity<String> deleteWorker(Integer id, @AuthenticationPrincipal User user) throws NotEnoughAccessLevelToData, DbException {
+    public ResponseEntity<String> deleteWorker(@PathVariable Integer id, @AuthenticationPrincipal User user) throws NotEnoughAccessLevelToData, DbException {
         workerService.deleteWorker(id, user);
         return ResponseEntity.status(HttpStatus.OK).body("Worker deleted successfully");
     }
