@@ -20,4 +20,10 @@ public interface WorkerDAO extends JpaRepository<Worker, Integer> {
 
     @Query(value = "SELECT * FROM get_workers_by_substring_name(:name)", nativeQuery = true)
     List<Worker> getWorkersHaveNameStartsWith(@Param("name") String name);
+
+    @Query(value = "SELECT change_worker_organization(?1, ?2)", nativeQuery = true)
+    void changeWorkerOrganization(Integer worker_id, Integer organization_id);
+
+    @Query(value = "SELECT index_salary_to_worker_by_coefficient(?1, ?2)", nativeQuery = true)
+    Double indexSalaryToWorkerByCoefficient(Integer worker_id, Double index);
 }

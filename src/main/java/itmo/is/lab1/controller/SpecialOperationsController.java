@@ -1,14 +1,12 @@
 package itmo.is.lab1.controller;
 
 import itmo.is.lab1.DTO.model.data.WorkerDTO;
+import itmo.is.lab1.exceptionHandler.DbException;
 import itmo.is.lab1.service.SpecialOperationsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -36,5 +34,17 @@ public class SpecialOperationsController {
         return ResponseEntity
                 .ok()
                 .body(specialOperationsService.getWorkersHaveNameStartsWith(name));
+    }
+
+    @PostMapping("/change_worker_organization")
+    public void changeWorkerOrganiation(Integer worker_id, Integer organization_id) throws DbException {
+        specialOperationsService.changeWorkerOrganization(worker_id, organization_id);
+    }
+
+    @PostMapping("/index_worker_salary")
+    public ResponseEntity<Double> indexWorkerSalary(Integer worker_id, Double coefficient) throws DbException {
+        return ResponseEntity.ok(
+                specialOperationsService.indexWorkerSalary(worker_id, coefficient)
+        );
     }
 }
