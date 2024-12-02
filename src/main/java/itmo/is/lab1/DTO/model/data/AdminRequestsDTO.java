@@ -15,5 +15,5 @@ public class AdminRequestsDTO {
 
     private Date date;
 
-    private Boolean accepted = false;
+    private Boolean accepted;
 }

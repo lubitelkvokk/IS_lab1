@@ -3,7 +3,9 @@ package itmo.is.lab1.service;
 import itmo.is.lab1.DTO.model.data.WorkerDTO;
 import itmo.is.lab1.dao.WorkerDAO;
 import itmo.is.lab1.exceptionHandler.DbException;
+import itmo.is.lab1.model.data.Worker;
 import itmo.is.lab1.objMapper.WorkerMapper;
+import itmo.is.lab1.permission.PermissionChecker;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -16,6 +18,8 @@ public class SpecialOperationsService {
 
     @Autowired
     private WorkerMapper workerMapper;
+    @Autowired
+    private PermissionChecker permissionChecker;
 
     public Double getAvgAllWorkersRaiting() {
         return workerDAO.getAvgRaiting();
@@ -34,6 +38,8 @@ public class SpecialOperationsService {
 
     public void changeWorkerOrganization(Integer worker_id, Integer organization_id) throws DbException {
         try {
+            Worker worker = workerDAO.findById(worker_id).orElseThrow(() -> new DbException("Worker not found"));
+            permissionChecker.checkRUDPermission(worker);
             workerDAO.changeWorkerOrganization(worker_id, organization_id);
         } catch (Exception e) {
             if (e.getMessage().contains("Nonexistent organization ID")) {

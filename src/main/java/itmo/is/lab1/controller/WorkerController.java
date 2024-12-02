@@ -50,6 +50,7 @@ public class WorkerController {
     @PutMapping
     @Operation(description = "Обновляет информацию о рабочем")
     public ResponseEntity<String> updateWorker(@AuthenticationPrincipal User user, @Valid @RequestBody WorkerDTO workerDTO) throws NotEnoughAccessLevelToData, DbException {
+        System.out.println(workerDTO.getOrganizationId());
         workerService.updateWorker(workerDTO, user);
         return ResponseEntity.status(HttpStatus.OK).body("Worker updated successfully");
     }

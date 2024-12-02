@@ -75,7 +75,9 @@ public class WorkerService {
         permissionChecker.checkRUDPermission(worker);
         // Обновление полей
         worker.setName(workerDTO.getName());
-
+        for (int i = 0 ; i < 100; i ++){
+            System.out.println(workerDTO.getOrganizationId());
+        }
         Organization existingOrganization = organizationDAO.findById(workerDTO.getOrganizationId())
                 .orElseThrow(() -> new DbException("Organization not found with id: " + workerDTO.getOrganizationId()));
         worker.setOrganization(existingOrganization);
