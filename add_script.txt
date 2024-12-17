@@ -15,7 +15,7 @@ Person
 {
   "eyeColor": "BROWN",
   "hairColor": "BLACK",
-  "locationId": 1,
+  "locationId": 12436663,
   "birthday": "1990-05-20T15:30:00Z",
   "nationality": "RUSSIA"
 };

@@ -4,6 +4,7 @@ import io.swagger.v3.oas.annotations.Operation;
 import itmo.is.lab1.DTO.model.data.AddressDTO;
 import itmo.is.lab1.exceptionHandler.DbException;
 import itmo.is.lab1.exceptionHandler.NotEnoughAccessLevelToData;
+import itmo.is.lab1.model.auth.User;
 import itmo.is.lab1.service.model.AddressService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,6 +12,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
@@ -23,8 +25,9 @@ public class AddressController {
     private AddressService addressService;
 
     @PostMapping
-    public ResponseEntity<AddressDTO> createAddress(@Valid @RequestBody AddressDTO addressDTO) {
-        addressDTO = addressService.createAddress(addressDTO);
+    public ResponseEntity<AddressDTO> createAddress(@Valid @RequestBody AddressDTO addressDTO,
+                                                    @AuthenticationPrincipal User user) throws DbException {
+        addressDTO = addressService.createAddress(addressDTO, user);
         return ResponseEntity.status(HttpStatus.CREATED).body(addressDTO);
     }
     @GetMapping

@@ -4,6 +4,7 @@ import io.swagger.v3.oas.annotations.Operation;
 import itmo.is.lab1.DTO.model.data.CoordinatesDTO;
 import itmo.is.lab1.exceptionHandler.DbException;
 import itmo.is.lab1.exceptionHandler.NotEnoughAccessLevelToData;
+import itmo.is.lab1.model.auth.User;
 import itmo.is.lab1.service.model.CoordinatesService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,6 +12,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
@@ -24,9 +26,10 @@ public class CoordinatesController {
 
     @PostMapping
     @Operation(description = "Добавляет координаты")
-    public ResponseEntity<CoordinatesDTO> createCoordinates(@Valid @RequestBody CoordinatesDTO coordinatesDTO) {
+    public ResponseEntity<CoordinatesDTO> createCoordinates(@Valid @RequestBody CoordinatesDTO coordinatesDTO,
+                                                            @AuthenticationPrincipal User user) {
         System.out.println(coordinatesDTO);
-        coordinatesDTO = coordinatesService.createCoordinates(coordinatesDTO);
+        coordinatesDTO = coordinatesService.createCoordinates(coordinatesDTO, user);
         return ResponseEntity.status(HttpStatus.CREATED).body(coordinatesDTO);
     }
 

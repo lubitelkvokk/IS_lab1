@@ -26,7 +26,7 @@ public class AddressService {
     @Autowired
     private PermissionChecker permissionChecker;
 
-    public AddressDTO createAddress(AddressDTO addressDTO) {
+    public AddressDTO createAddress(AddressDTO addressDTO, User user) {
         Address address = addressMapper.toEntity(addressDTO);
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         address.setUser((User) authentication.getPrincipal());

@@ -33,7 +33,7 @@ public class LocationService {
         return locationMapper.toDTO(savedLocation);
     }
 
-    public LocationDTO getLocationById(Integer id, User user) throws DbException, NotEnoughAccessLevelToData {
+    public LocationDTO getLocationById(Integer id, User user) throws DbException {
         Location location = locationDAO.findById(id).orElseThrow(() ->
                 new DbException("Location not found with id = %d".formatted(id)));
 

@@ -27,7 +27,7 @@ public class CoordinatesService {
     @Autowired
     private PermissionChecker permissionChecker;
 
-    public CoordinatesDTO createCoordinates(CoordinatesDTO coordinatesDTO) {
+    public CoordinatesDTO createCoordinates(CoordinatesDTO coordinatesDTO, User user) {
         Coordinates coordinates = coordinatesMapper.toEntity(coordinatesDTO);
 
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
