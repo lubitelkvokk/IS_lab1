@@ -69,8 +69,7 @@ public class FileService {
                 workerService.createWorker((WorkerDTO) obj, user);
             } else if (obj.getClass().equals(OrganizationDTO.class)) {
                 organizationService.createOrganization((OrganizationDTO) obj, user);
-            }
-            else if (obj.getClass().equals(CoordinatesDTO.class)) {
+            } else if (obj.getClass().equals(CoordinatesDTO.class)) {
                 coordinatesService.createCoordinates((CoordinatesDTO) obj, user);
             }
         }
