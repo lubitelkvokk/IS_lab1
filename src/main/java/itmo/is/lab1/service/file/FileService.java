@@ -1,48 +1,25 @@
 package itmo.is.lab1.service.file;
 
 import itmo.is.lab1.DTO.model.data.*;
-import itmo.is.lab1.dao.*;
 import itmo.is.lab1.exceptionHandler.DbException;
-import itmo.is.lab1.mapper.AddressMapper;
-import itmo.is.lab1.mapper.LocationMapper;
-import itmo.is.lab1.mapper.PersonMapper;
-import itmo.is.lab1.mapper.WorkerMapper;
 import itmo.is.lab1.model.auth.User;
-import itmo.is.lab1.model.data.Coordinates;
 import itmo.is.lab1.service.model.*;
+import jakarta.validation.Validation;
+import jakarta.validation.Validator;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.validation.ValidationAutoConfiguration;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
+import java.util.List;
 
 @Service
 public class FileService {
     @Autowired
     private FileParser fileParser;
 
-    @Autowired
-    private AddressDAO addressDAO;
-
-    @Autowired
-    private CoordinatesDAO coordinatesDAO;
-
-    @Autowired
-    private LocationDAO locationDAO;
-
-    @Autowired
-    private PersonDAO personDAO;
-    @Autowired
-    private WorkerDAO workerDAO;
-    @Autowired
-    private LocationMapper locationMapper;
-    @Autowired
-    private PersonMapper personMapper;
-    @Autowired
-    private AddressMapper addressMapper;
-    @Autowired
-    private WorkerMapper workerMapper;
     @Autowired
     private LocationService locationService;
     @Autowired
@@ -55,10 +32,23 @@ public class FileService {
     private OrganizationService organizationService;
     @Autowired
     private CoordinatesService coordinatesService;
+    @Autowired
+    private ValidationAutoConfiguration validationAutoConfiguration;
 
+    /**
+     * @param file
+     * @param user
+     * @return count added object
+     * @throws IOException
+     * @throws ClassNotFoundException
+     * @throws DbException
+     */
     @Transactional(rollbackFor = {IOException.class, ClassNotFoundException.class, DbException.class})
-    public void executeScript(MultipartFile file, User user) throws IOException, ClassNotFoundException, DbException {
-        for (Object obj : fileParser.parseObjects(file)) {
+    public int executeScript(MultipartFile file, User user) throws IOException, ClassNotFoundException, DbException {
+        Validator validator = Validation.buildDefaultValidatorFactory().getValidator();
+        List<Object> result = fileParser.parseObjects(file);
+        for (Object obj : result) {
+            validator.validate(obj).forEach(System.out::println);
             if (obj.getClass().equals(LocationDTO.class)) {
                 locationService.createLocation((LocationDTO) obj, user);
             } else if (obj.getClass().equals(PersonDTO.class)) {
@@ -73,6 +63,9 @@ public class FileService {
                 coordinatesService.createCoordinates((CoordinatesDTO) obj, user);
             }
         }
+
+        return result.size();
+
     }
 
 }

@@ -3,6 +3,7 @@ package itmo.is.lab1.service.additional;
 import itmo.is.lab1.DTO.model.additional.HistoryOperationDTO;
 import itmo.is.lab1.dao.HistoryOperationDAO;
 import itmo.is.lab1.mapper.HistoryOperationMapper;
+import itmo.is.lab1.model.auth.Role;
 import itmo.is.lab1.model.auth.User;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -20,6 +21,8 @@ public class HistoryOperationService {
     }
 
     public Page<HistoryOperationDTO> getHistoryOperations(Pageable pageable, User user) {
+        if (user.getRole().equals(Role.ROLE_ADMIN))
+            return historyOperationDAO.findAll(pageable).map(historyOperationMapper::toDTO);
         return historyOperationDAO.findAllByUser(user, pageable).map(historyOperationMapper::toDTO);
     }
 

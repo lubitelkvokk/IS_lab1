@@ -4,7 +4,7 @@ Worker
   "coordinatesId": 1,
   "creationDate": "2023-11-04T15:30:00Z",
   "organizationId": 1,
-  "salary": 50000,
+  "salary": 0,
   "rating": 10,
   "endDate": "2024-11-12T22:38:51.864Z",
   "position": "ENGINEER",
@@ -15,7 +15,7 @@ Person
 {
   "eyeColor": "BROWN",
   "hairColor": "BLACK",
-  "locationId": 12436663,
+  "locationId": 1,
   "birthday": "1990-05-20T15:30:00Z",
   "nationality": "RUSSIA"
 };
