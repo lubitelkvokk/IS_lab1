@@ -5,7 +5,7 @@ import itmo.is.lab1.DTO.model.data.PersonDTO;
 import itmo.is.lab1.exceptionHandler.DbException;
 import itmo.is.lab1.exceptionHandler.NotEnoughAccessLevelToData;
 import itmo.is.lab1.model.auth.User;
-import itmo.is.lab1.service.PersonService;
+import itmo.is.lab1.service.model.PersonService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;

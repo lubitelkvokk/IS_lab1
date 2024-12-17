@@ -5,7 +5,7 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import itmo.is.lab1.DTO.model.auth.JwtAuthenticationResponse;
 import itmo.is.lab1.DTO.model.auth.SignRequest;
 import itmo.is.lab1.exceptionHandler.DbException;
-import itmo.is.lab1.service.AuthenticationService;
+import itmo.is.lab1.service.auth.AuthenticationService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.validation.annotation.Validated;

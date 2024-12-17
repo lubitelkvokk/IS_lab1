@@ -1,7 +1,6 @@
-package itmo.is.lab1.objMapper;
+package itmo.is.lab1.mapper;
 
 import itmo.is.lab1.DTO.model.data.AddressDTO;
-import itmo.is.lab1.model.auth.User;
 import itmo.is.lab1.model.data.Address;
 import org.springframework.stereotype.Component;
 

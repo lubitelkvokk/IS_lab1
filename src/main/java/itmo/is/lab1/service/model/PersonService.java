@@ -1,24 +1,19 @@
-package itmo.is.lab1.service;
+package itmo.is.lab1.service.model;
 
-import itmo.is.lab1.DTO.model.data.LocationDTO;
 import itmo.is.lab1.DTO.model.data.PersonDTO;
-import itmo.is.lab1.dao.AddressDAO;
 import itmo.is.lab1.dao.LocationDAO;
 import itmo.is.lab1.dao.PersonDAO;
 import itmo.is.lab1.exceptionHandler.DbException;
 import itmo.is.lab1.exceptionHandler.NotEnoughAccessLevelToData;
 import itmo.is.lab1.model.auth.User;
-import itmo.is.lab1.model.data.Address;
 import itmo.is.lab1.model.data.Location;
 import itmo.is.lab1.model.data.Person;
-import itmo.is.lab1.objMapper.PersonMapper;
+import itmo.is.lab1.mapper.PersonMapper;
 import itmo.is.lab1.permission.PermissionChecker;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
-
-import java.util.Objects;
 
 @Service
 public class PersonService {

@@ -1,10 +1,10 @@
-package itmo.is.lab1.service;
+package itmo.is.lab1.service.model;
 
 import itmo.is.lab1.DTO.model.data.WorkerDTO;
 import itmo.is.lab1.dao.WorkerDAO;
 import itmo.is.lab1.exceptionHandler.DbException;
 import itmo.is.lab1.model.data.Worker;
-import itmo.is.lab1.objMapper.WorkerMapper;
+import itmo.is.lab1.mapper.WorkerMapper;
 import itmo.is.lab1.permission.PermissionChecker;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

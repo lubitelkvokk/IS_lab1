@@ -1,10 +1,8 @@
 package itmo.is.lab1.controller;
 
-import itmo.is.lab1.DTO.model.auth.UserDTO;
 import itmo.is.lab1.DTO.model.data.AdminRequestsDTO;
-import itmo.is.lab1.model.auth.AdminRequests;
 import itmo.is.lab1.model.auth.User;
-import itmo.is.lab1.service.AdminService;
+import itmo.is.lab1.service.admin.AdminService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

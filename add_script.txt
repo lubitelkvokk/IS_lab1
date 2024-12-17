@@ -1,0 +1,27 @@
+Worker
+{
+  "name": "Иван Иванов",
+  "coordinatesId": 1,
+  "creationDate": "2023-11-04T15:30:00Z",
+  "organizationId": 1,
+  "salary": 50000,
+  "rating": 10,
+  "endDate": "2024-11-12T22:38:51.864Z",
+  "position": "ENGINEER",
+  "status": "HIRED",
+  "personId" : 104
+};
+Person
+{
+  "eyeColor": "BROWN",
+  "hairColor": "BLACK",
+  "locationId": 1,
+  "birthday": "1990-05-20T15:30:00Z",
+  "nationality": "RUSSIA"
+};
+Location
+{
+    "x" : 24.5,
+    "y" : 52,
+    "name" : "AbobaLocation"
+};

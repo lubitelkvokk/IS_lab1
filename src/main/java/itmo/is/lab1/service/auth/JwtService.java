@@ -1,4 +1,4 @@
-package itmo.is.lab1.service;
+package itmo.is.lab1.service.auth;
 
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;

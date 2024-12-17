@@ -1,8 +1,7 @@
-package itmo.is.lab1.objMapper;
+package itmo.is.lab1.mapper;
 
 import itmo.is.lab1.DTO.model.data.AdminRequestsDTO;
 import itmo.is.lab1.model.auth.AdminRequests;
-import org.apache.catalina.mapper.Mapper;
 import org.springframework.stereotype.Component;
 
 import java.util.Date;

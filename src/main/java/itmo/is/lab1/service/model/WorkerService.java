@@ -1,4 +1,4 @@
-package itmo.is.lab1.service;
+package itmo.is.lab1.service.model;
 
 import itmo.is.lab1.DTO.model.data.WorkerDTO;
 import itmo.is.lab1.dao.CoordinatesDAO;
@@ -12,7 +12,7 @@ import itmo.is.lab1.model.data.Coordinates;
 import itmo.is.lab1.model.data.Organization;
 import itmo.is.lab1.model.data.Person;
 import itmo.is.lab1.model.data.Worker;
-import itmo.is.lab1.objMapper.WorkerMapper;
+import itmo.is.lab1.mapper.WorkerMapper;
 import itmo.is.lab1.permission.PermissionChecker;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -20,7 +20,6 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.Date;
-import java.util.Objects;
 
 @Service
 public class WorkerService {

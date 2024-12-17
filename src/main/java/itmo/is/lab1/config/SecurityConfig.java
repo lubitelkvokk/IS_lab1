@@ -1,6 +1,6 @@
 package itmo.is.lab1.config;
 
-import itmo.is.lab1.service.UserService;
+import itmo.is.lab1.service.auth.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

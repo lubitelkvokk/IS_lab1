@@ -2,7 +2,7 @@ package itmo.is.lab1.controller;
 
 import itmo.is.lab1.DTO.model.data.WorkerDTO;
 import itmo.is.lab1.exceptionHandler.DbException;
-import itmo.is.lab1.service.SpecialOperationsService;
+import itmo.is.lab1.service.model.SpecialOperationsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

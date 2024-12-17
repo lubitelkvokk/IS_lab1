@@ -1,22 +1,20 @@
-package itmo.is.lab1.service;
+package itmo.is.lab1.service.admin;
 
-import itmo.is.lab1.DTO.model.auth.UserDTO;
 import itmo.is.lab1.DTO.model.data.AdminRequestsDTO;
 import itmo.is.lab1.dao.AdminDAO;
 import itmo.is.lab1.dao.UserDAO;
 import itmo.is.lab1.model.auth.AdminRequests;
 import itmo.is.lab1.model.auth.Role;
 import itmo.is.lab1.model.auth.User;
-import itmo.is.lab1.objMapper.AdminRequestsMapper;
-import itmo.is.lab1.objMapper.UserMapper;
+import itmo.is.lab1.mapper.AdminRequestsMapper;
+import itmo.is.lab1.mapper.UserMapper;
+import itmo.is.lab1.service.auth.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
-
-import static com.fasterxml.jackson.databind.type.LogicalType.DateTime;
 
 @Service
 public class AdminService {

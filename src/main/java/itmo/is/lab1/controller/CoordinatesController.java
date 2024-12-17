@@ -4,7 +4,7 @@ import io.swagger.v3.oas.annotations.Operation;
 import itmo.is.lab1.DTO.model.data.CoordinatesDTO;
 import itmo.is.lab1.exceptionHandler.DbException;
 import itmo.is.lab1.exceptionHandler.NotEnoughAccessLevelToData;
-import itmo.is.lab1.service.CoordinatesService;
+import itmo.is.lab1.service.model.CoordinatesService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;

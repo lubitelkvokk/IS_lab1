@@ -1,4 +1,4 @@
-package itmo.is.lab1.service;
+package itmo.is.lab1.service.auth;
 
 import itmo.is.lab1.dao.UserDAO;
 import itmo.is.lab1.exceptionHandler.DbException;

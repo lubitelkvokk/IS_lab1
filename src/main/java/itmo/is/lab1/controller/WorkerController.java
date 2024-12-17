@@ -1,12 +1,11 @@
 package itmo.is.lab1.controller;
 
 import io.swagger.v3.oas.annotations.Operation;
-import itmo.is.lab1.DTO.model.data.PersonDTO;
 import itmo.is.lab1.DTO.model.data.WorkerDTO;
 import itmo.is.lab1.exceptionHandler.DbException;
 import itmo.is.lab1.exceptionHandler.NotEnoughAccessLevelToData;
 import itmo.is.lab1.model.auth.User;
-import itmo.is.lab1.service.WorkerService;
+import itmo.is.lab1.service.model.WorkerService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;

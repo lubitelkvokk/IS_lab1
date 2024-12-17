@@ -1,6 +1,5 @@
-package itmo.is.lab1.service;
+package itmo.is.lab1.service.model;
 
-import itmo.is.lab1.DTO.model.data.LocationDTO;
 import itmo.is.lab1.DTO.model.data.OrganizationDTO;
 import itmo.is.lab1.dao.AddressDAO;
 import itmo.is.lab1.dao.OrganizationDAO;
@@ -9,15 +8,13 @@ import itmo.is.lab1.exceptionHandler.NotEnoughAccessLevelToData;
 import itmo.is.lab1.model.auth.User;
 import itmo.is.lab1.model.data.Address;
 import itmo.is.lab1.model.data.Organization;
-import itmo.is.lab1.objMapper.OrganizationMapper;
+import itmo.is.lab1.mapper.OrganizationMapper;
 import itmo.is.lab1.permission.PermissionChecker;
+import itmo.is.lab1.service.auth.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Service;
-
-import java.util.Objects;
 
 @Service
 public class OrganizationService {

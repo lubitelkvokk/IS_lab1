@@ -5,7 +5,7 @@ import itmo.is.lab1.DTO.model.data.LocationDTO;
 import itmo.is.lab1.exceptionHandler.DbException;
 import itmo.is.lab1.exceptionHandler.NotEnoughAccessLevelToData;
 import itmo.is.lab1.model.auth.User;
-import itmo.is.lab1.service.LocationService;
+import itmo.is.lab1.service.model.LocationService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;

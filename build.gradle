@@ -31,8 +31,10 @@ dependencies {
 //    data
     implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
     implementation 'org.hibernate.orm:hibernate-core:6.2.5.Final'
+    implementation group: 'com.fasterxml.jackson.datatype', name: 'jackson-datatype-jsr310', version: '2.18.2'
     compileOnly 'org.projectlombok:lombok'
     annotationProcessor 'org.projectlombok:lombok'
+
 
 //    web
     implementation 'org.springframework.boot:spring-boot-starter-web'

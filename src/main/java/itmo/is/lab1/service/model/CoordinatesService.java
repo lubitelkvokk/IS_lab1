@@ -1,4 +1,4 @@
-package itmo.is.lab1.service;
+package itmo.is.lab1.service.model;
 
 import itmo.is.lab1.DTO.model.data.CoordinatesDTO;
 import itmo.is.lab1.dao.CoordinatesDAO;
@@ -6,7 +6,7 @@ import itmo.is.lab1.exceptionHandler.DbException;
 import itmo.is.lab1.exceptionHandler.NotEnoughAccessLevelToData;
 import itmo.is.lab1.model.auth.User;
 import itmo.is.lab1.model.data.Coordinates;
-import itmo.is.lab1.objMapper.CoordinatesMapper;
+import itmo.is.lab1.mapper.CoordinatesMapper;
 import itmo.is.lab1.permission.PermissionChecker;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -14,8 +14,6 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
-
-import java.util.Objects;
 
 @Service
 public class CoordinatesService {
