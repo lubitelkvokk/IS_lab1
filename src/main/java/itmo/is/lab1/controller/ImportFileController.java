@@ -2,6 +2,7 @@ package itmo.is.lab1.controller;
 
 import itmo.is.lab1.DTO.model.additional.HistoryOperationDTO;
 import itmo.is.lab1.exceptionHandler.DbException;
+import itmo.is.lab1.exceptionHandler.ImportFormatException;
 import itmo.is.lab1.model.auth.User;
 import itmo.is.lab1.service.additional.HistoryOperationService;
 import itmo.is.lab1.service.file.FileService;
@@ -32,7 +33,7 @@ public class ImportFileController {
     @PostMapping
     public ResponseEntity<String> submit(@RequestParam("file") MultipartFile file,
                                          ModelMap modelMap,
-                                         @AuthenticationPrincipal User user) throws IOException, ClassNotFoundException, DbException {
+                                         @AuthenticationPrincipal User user) throws IOException, ClassNotFoundException, DbException, ImportFormatException {
         int count = fileService.executeScript(file, user);
         HistoryOperationDTO historyOperationDTO = new HistoryOperationDTO();
         historyOperationDTO.setStatus(true);

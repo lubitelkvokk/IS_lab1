@@ -4,7 +4,7 @@ Worker
   "coordinatesId": 1,
   "creationDate": "2023-11-04T15:30:00Z",
   "organizationId": 1,
-  "salary": 0,
+  "salary": 10,
   "rating": 10,
   "endDate": "2024-11-12T22:38:51.864Z",
   "position": "ENGINEER",

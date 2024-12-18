@@ -7,6 +7,7 @@ import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.MalformedJwtException;
 import io.jsonwebtoken.security.SignatureException;
 import itmo.is.lab1.exceptionHandler.DbException;
+import itmo.is.lab1.exceptionHandler.ImportFormatException;
 import itmo.is.lab1.exceptionHandler.NotEnoughAccessLevelToData;
 import org.postgresql.util.PSQLException;
 import org.springframework.context.support.DefaultMessageSourceResolvable;
@@ -100,7 +101,10 @@ public class CustomExceptionHandler extends ResponseEntityExceptionHandler {
         }
         return ResponseEntity.internalServerError().body("Ошибка базы данных.");
     }
-
+    @ExceptionHandler(ImportFormatException.class)
+    public ResponseEntity<String> handleImportFormatException(ImportFormatException ex) {
+        return ResponseEntity.badRequest().body(ex.getMessage());
+    }
     private Throwable getRootCause(Throwable throwable) {
         Throwable rootCause = throwable;
         while (rootCause.getCause() != null && rootCause != rootCause.getCause()) {
