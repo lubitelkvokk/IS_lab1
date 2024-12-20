@@ -36,7 +36,7 @@ public class Organization implements Creation{
             nullable = false)
     private long employeesCount; // Значение должно быть больше 0
 
-    @Column(name = "full_name")
+    @Column(name = "full_name", unique = true, nullable = false)
     private String fullName; // Длина не должна быть больше 1272, не может быть пустой, может быть null
 
     @Column(name = "rating")

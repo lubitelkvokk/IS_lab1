@@ -28,7 +28,6 @@ public class OrganizationController {
     @Operation(description = "Создает новую организацию")
     public ResponseEntity<OrganizationDTO> createOrganization(@AuthenticationPrincipal User user, @Valid @RequestBody OrganizationDTO organizationDTO) throws DbException {
         OrganizationDTO createdOrganization = organizationService.createOrganization(organizationDTO, user);
-
         return ResponseEntity.status(HttpStatus.CREATED).body(createdOrganization);
     }
 

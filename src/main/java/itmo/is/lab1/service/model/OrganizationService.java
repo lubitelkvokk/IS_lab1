@@ -32,13 +32,16 @@ public class OrganizationService {
     private PermissionChecker permissionChecker;
 
     public OrganizationDTO createOrganization(OrganizationDTO organizationDTO, User user) throws DbException {
+        if (organizationDAO.findOrganizationByFullName(organizationDTO.getFullName()) != null) {
+            throw new DbException("Organization with such name exist yet");
+        }
+
         Organization organization = organizationMapper.toEntity(organizationDTO);
         organization.setUser(user);
         // Проверяем наличие Address и загружаем его из базы данных
         Address existingAddress = addressDAO.findById(organizationDTO.getAddressId())
                 .orElseThrow(() -> new DbException("Address not found with id: " + organizationDTO.getAddressId()));
         organization.setOfficialAddress(existingAddress);
-
 
         Organization savedOrganization = organizationDAO.save(organization);
         return organizationMapper.toDTO(savedOrganization);
@@ -83,6 +86,7 @@ public class OrganizationService {
         permissionChecker.checkRUDPermission(organization);
         organizationDAO.delete(organization);
     }
+
     public Page<OrganizationDTO> getNOrganizationStartFromPage(Pageable pageable) {
         return organizationDAO.findAll(pageable).map(organizationMapper::toDTO);
     }

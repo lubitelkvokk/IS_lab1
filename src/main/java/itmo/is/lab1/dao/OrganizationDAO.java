@@ -8,4 +8,5 @@ import org.springframework.stereotype.Repository;
 public interface OrganizationDAO extends JpaRepository<Organization, Integer> {
     // JpaRepository provides methods for save, findById, findAll, and deleteById,
     // so no additional implementation is needed for standard CRUD operations.
+    Organization findOrganizationByFullName(String fullName);
 }
