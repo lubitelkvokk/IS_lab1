@@ -15,6 +15,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Isolation;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 public class OrganizationService {
@@ -31,6 +33,7 @@ public class OrganizationService {
     @Autowired
     private PermissionChecker permissionChecker;
 
+    @Transactional
     public OrganizationDTO createOrganization(OrganizationDTO organizationDTO, User user) throws DbException {
         if (organizationDAO.findOrganizationByFullName(organizationDTO.getFullName()) != null) {
             throw new DbException("Organization with such name exist yet");

@@ -16,7 +16,7 @@ import java.io.Serializable;
 @Table(name = "address")
 public class Address implements Creation {
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     private Integer id;
 

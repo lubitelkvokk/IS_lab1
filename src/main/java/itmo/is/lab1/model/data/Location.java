@@ -12,7 +12,7 @@ import lombok.NoArgsConstructor;
 @Table(name = "location")
 public class Location implements Creation{
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false)
     private Integer id;
 

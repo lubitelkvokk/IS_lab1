@@ -8,6 +8,8 @@ import itmo.is.lab1.mapper.WorkerMapper;
 import itmo.is.lab1.permission.PermissionChecker;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Isolation;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -36,6 +38,7 @@ public class SpecialOperationsService {
                 .toList();
     }
 
+    @Transactional(isolation = Isolation.READ_COMMITTED)
     public void changeWorkerOrganization(Integer worker_id, Integer organization_id) throws DbException {
         try {
             Worker worker = workerDAO.findById(worker_id).orElseThrow(() -> new DbException("Worker not found"));

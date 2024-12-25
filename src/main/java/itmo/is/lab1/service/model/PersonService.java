@@ -32,9 +32,9 @@ public class PersonService {
     public PersonDTO createPerson(PersonDTO personDTO, User user) throws DbException {
         Person person = personMapper.toEntity(personDTO);
         person.setUser(user); // Привязываем пользователя к сущности Person
-
+        System.out.println(personDTO.getLocationId());
         Location location = locationDAO.findById(personDTO.getLocationId())
-                .orElseThrow(() -> new DbException("Address not found with id: " + personDTO.getLocationId()));
+                .orElseThrow(() -> new DbException("Location not found with id: " + personDTO.getLocationId()));
         person.setLocation(location);
 
         Person savedPerson = personDAO.save(person);

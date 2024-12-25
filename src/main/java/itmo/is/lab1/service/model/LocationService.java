@@ -34,6 +34,7 @@ public class LocationService {
     }
 
     public LocationDTO getLocationById(Integer id, User user) throws DbException {
+        System.out.println(id);
         Location location = locationDAO.findById(id).orElseThrow(() ->
                 new DbException("Location not found with id = %d".formatted(id)));
 

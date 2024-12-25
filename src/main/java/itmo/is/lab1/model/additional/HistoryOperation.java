@@ -8,7 +8,7 @@ import lombok.Data;
 @Data
 public class HistoryOperation {
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
 
@@ -20,5 +20,8 @@ public class HistoryOperation {
 
     @Column
     private Integer objCount;
+
+    @Column
+    private String filename;
 
 }

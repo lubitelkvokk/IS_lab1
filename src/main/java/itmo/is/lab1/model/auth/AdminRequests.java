@@ -9,7 +9,7 @@ import java.util.Date;
 @Data
 public class AdminRequests {
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
     @JoinColumn(name = "sender_id", nullable = false, referencedColumnName = "id")

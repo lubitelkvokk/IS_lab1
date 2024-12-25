@@ -8,6 +8,7 @@ import io.jsonwebtoken.MalformedJwtException;
 import io.jsonwebtoken.security.SignatureException;
 import itmo.is.lab1.exceptionHandler.DbException;
 import itmo.is.lab1.exceptionHandler.ImportFormatException;
+import itmo.is.lab1.exceptionHandler.MinIOConnectException;
 import itmo.is.lab1.exceptionHandler.NotEnoughAccessLevelToData;
 import org.postgresql.util.PSQLException;
 import org.springframework.context.support.DefaultMessageSourceResolvable;
@@ -113,4 +114,8 @@ public class CustomExceptionHandler extends ResponseEntityExceptionHandler {
         return rootCause;
     }
 
+    @ExceptionHandler(MinIOConnectException.class)
+    public ResponseEntity<String> handleMinIOConnectionException(MinIOConnectException ex) {
+        return ResponseEntity.internalServerError().body(ex.getMessage());
+    }
 }

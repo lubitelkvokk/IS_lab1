@@ -18,7 +18,7 @@ import java.util.Date;
 public class Worker implements Creation{
 
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false, unique = true)
     private Integer id; // Значение должно быть больше 0, уникально, генерируется автоматически
 

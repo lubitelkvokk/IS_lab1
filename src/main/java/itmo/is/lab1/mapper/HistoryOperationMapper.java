@@ -16,6 +16,7 @@ public class HistoryOperationMapper implements GenericMapper<HistoryOperation, H
         dto.setStatus(entity.isStatus());
         dto.setObjCount(entity.getObjCount());
         dto.setUserId(entity.getUser().getId());
+        dto.setFilename(entity.getFilename());
         return dto;
     }
 
@@ -28,6 +29,8 @@ public class HistoryOperationMapper implements GenericMapper<HistoryOperation, H
 
         entity.setObjCount(dto.getObjCount());
         entity.setStatus(dto.isStatus());
+
+        entity.setFilename(dto.getFilename());
         return entity;
     }
 }

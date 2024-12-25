@@ -55,7 +55,7 @@ BEGIN
 END;
 $$;
 
-SELECT change_worker_organization(134, 4);
+-- SELECT change_worker_organization(134, 4);
 
 -- Проиндексировать заработную плату указанному сотруднику на заданный коэффициент.
 CREATE OR REPLACE FUNCTION index_salary_to_worker_by_coefficient(worker_id integer,

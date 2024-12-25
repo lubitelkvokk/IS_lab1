@@ -8,4 +8,5 @@ public class HistoryOperationDTO {
     private boolean status;
     private Integer userId;
     private Integer objCount;
+    private String filename;
 }

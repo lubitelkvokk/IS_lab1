@@ -16,8 +16,8 @@ import lombok.NoArgsConstructor;
 @Table(name = "organization")
 public class Organization implements Creation{
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
-    @Column(name = "id", nullable = false)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id")
     private Integer id;
 
     @ManyToOne

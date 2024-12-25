@@ -1,5 +1,6 @@
 package itmo.is.lab1.service.file;
 
+import io.minio.errors.*;
 import itmo.is.lab1.DTO.model.data.*;
 import itmo.is.lab1.exceptionHandler.DbException;
 import itmo.is.lab1.exceptionHandler.ImportFormatException;
@@ -15,6 +16,8 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
+import java.security.InvalidKeyException;
+import java.security.NoSuchAlgorithmException;
 import java.util.List;
 import java.util.Set;
 
@@ -37,6 +40,8 @@ public class FileService {
     private CoordinatesService coordinatesService;
     @Autowired
     private ValidationAutoConfiguration validationAutoConfiguration;
+    @Autowired
+    private MinIOService minIOService;
 
     /**
      * @param file
@@ -47,7 +52,7 @@ public class FileService {
      * @throws DbException
      */
     @Transactional(rollbackFor = {IOException.class, ClassNotFoundException.class, DbException.class})
-    public int executeScript(MultipartFile file, User user) throws IOException, ClassNotFoundException, DbException, ImportFormatException {
+    public int executeScript(MultipartFile file, User user) throws IOException, ClassNotFoundException, DbException, ImportFormatException, ServerException, InsufficientDataException, ErrorResponseException, NoSuchAlgorithmException, InvalidKeyException, InvalidResponseException, XmlParserException, InternalException {
         Validator validator = Validation.buildDefaultValidatorFactory().getValidator();
         List<Object> result = fileParser.parseObjects(file);
         for (Object obj : result) {
@@ -70,6 +75,7 @@ public class FileService {
             }
         }
 
+        minIOService.saveObjectToBucket(file, user);
         return result.size();
 
     }
